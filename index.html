@@ -394,9 +394,16 @@ async function loadFromCloud(){
     const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
       headers: { 'X-Master-Key': MASTER_KEY }
     });
+    if(!res.ok) throw new Error('HTTP '+res.status);
     const data = await res.json();
-    if(data.record) { schedule = data.record; renderAll(); }
-  } catch(e) { console.log('Load failed, using local data'); }
+    if(data && data.record && data.record.morning) {
+      schedule = data.record;
+      renderAll();
+      console.log('Cloud data loaded OK');
+    } else {
+      console.log('Unexpected data format:', data);
+    }
+  } catch(e) { console.log('Load failed:', e.message); }
 }
 
 async function saveToCloud(){
