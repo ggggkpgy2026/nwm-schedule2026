@@ -16,8 +16,6 @@
     }
     body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;padding:1.5rem 1rem 4rem}
     .app{max-width:1140px;margin:0 auto}
-
-    /* ── top nav ── */
     .top-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;gap:12px}
     .nav-left{display:flex;align-items:center;gap:14px}
     .nav-icon{width:46px;height:46px;border-radius:12px;background:#18180f;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
@@ -27,7 +25,8 @@
     .date-badge{font-size:12px;font-weight:600;color:#791f1f;background:#fff0f0;border:1px solid rgba(163,45,45,.22);border-radius:var(--radius-md);padding:7px 14px;white-space:nowrap;font-family:var(--mono)}
     .edit-btn{font-size:12px;font-weight:600;font-family:var(--font);background:#18180f;color:#fff;border:none;border-radius:var(--radius-md);padding:8px 16px;cursor:pointer;white-space:nowrap;transition:opacity .15s}
     .edit-btn:hover{opacity:.8}
-    .edit-btn.secondary{background:var(--surface);color:var(--text);border:0.5px solid var(--border2)}
+
+    /* password */
     #pwOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:1rem}
     #pwOverlay.open{display:flex}
     .pw-box{background:var(--surface);border-radius:var(--radius-xl);padding:2rem;width:100%;max-width:340px;text-align:center}
@@ -41,25 +40,23 @@
     .pw-btn{width:100%;background:#18180f;color:#fff;border:none;border-radius:var(--radius-md);padding:11px;font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;transition:opacity .15s;margin-bottom:8px}
     .pw-btn:hover{opacity:.85}
     .pw-cancel{font-size:13px;color:var(--text3);cursor:pointer;background:none;border:none;font-family:var(--font)}
-    .pw-cancel:hover{color:var(--text2)}
     .pw-error{font-size:12px;color:#a32d2d;margin-top:6px;min-height:18px}
 
-    /* ── shift legend ── */
+    /* shift legend */
     .shifts-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:1.25rem}
     .shift-card{background:var(--surface);border-radius:var(--radius-lg);border:.5px solid var(--border2);padding:12px 14px;display:flex;align-items:center;gap:10px}
     .shift-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
     .shift-card-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
     .shift-card-time{font-size:12px;font-weight:600;color:var(--text);font-family:var(--mono)}
 
-    /* ── day tabs ── */
+    /* day tabs */
     .day-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:1rem;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
     .day-tabs::-webkit-scrollbar{display:none}
     .day-tab{flex-shrink:0;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;border:.5px solid var(--border2);background:var(--surface);color:var(--text2);transition:all .15s;user-select:none}
     .day-tab.active{background:#18180f;color:#fff;border-color:#18180f}
 
-    /* ── day panels ── */
-    .day-panel{display:none}
-    .day-panel.active{display:block}
+    /* day panels */
+    .day-panel{display:none}.day-panel.active{display:block}
     .shift-block{background:var(--surface);border-radius:var(--radius-xl);border:.5px solid var(--border2);margin-bottom:10px;overflow:hidden}
     .shift-block-header{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:.5px solid var(--border)}
     .shift-block-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
@@ -68,16 +65,17 @@
     .shift-block-names{display:flex;flex-wrap:wrap;gap:8px;padding:14px 16px}
     .shift-empty{padding:14px 16px;font-size:13px;color:var(--text3);font-style:italic}
 
-    /* ── badges ── */
+    /* badges */
     .badge{display:inline-block;font-size:14px;font-weight:600;padding:7px 16px;border-radius:8px;white-space:nowrap}
-    .b-blue{background:#1a6fc4;color:#fff}.b-purple{background:#6b3fc4;color:#fff}
-    .b-green{background:#2a8a3e;color:#fff}.b-teal{background:#0e8a6e;color:#fff}
-    .b-amber{background:#c47a0a;color:#fff}.b-coral{background:#c4451a;color:#fff}
-    .b-pink{background:#c4256e;color:#fff}.b-gray{background:#5a5a52;color:#fff}
-    .b-red{background:#c42020;color:#fff}.b-fsd{background:var(--surface2);color:var(--text2)}
-    .b-indigo{background:#2d3a9e;color:#fff}.b-brown{background:#8a4a1a;color:#fff}.b-slate{background:#2a5a6e;color:#fff}.b-orange{background:#c46010;color:#fff}
+    .b-purple{background:#7c3aed;color:#fff}.b-blue{background:#1d6fc4;color:#fff}
+    .b-rose{background:#9f1239;color:#fff}.b-pink{background:#c4256e;color:#fff}
+    .b-orange{background:#c2540a;color:#fff}.b-green{background:#16803c;color:#fff}
+    .b-cyan{background:#0e7490;color:#fff}.b-red{background:#c42020;color:#fff}
+    .b-teal{background:#0d6e5e;color:#fff}.b-brown{background:#7c3400;color:#fff}
+    .b-lime{background:#4a7c10;color:#fff}.b-indigo{background:#3730a3;color:#fff}
+    .b-fsd{background:var(--surface2);color:var(--text2)}
 
-    /* ── desktop table ── */
+    /* desktop table */
     .desktop-table-wrap{background:var(--surface);border-radius:var(--radius-xl);border:.5px solid var(--border2);overflow:hidden;margin-bottom:1.5rem;display:none}
     table{width:100%;border-collapse:collapse;table-layout:fixed}
     thead tr{background:#18180f}
@@ -94,7 +92,7 @@
     .fsd-badge{background:var(--surface2);color:var(--text2);font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;font-family:var(--mono)}
     .dash{color:var(--text3);font-size:18px}
 
-    /* ── bottom cards ── */
+    /* bottom cards */
     .bottom{display:grid;grid-template-columns:1fr;gap:10px;margin-top:1rem}
     .bottom-card{background:var(--surface);border:.5px solid var(--border2);border-radius:var(--radius-xl);padding:1.1rem}
     .card-title{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:10px;border-bottom:.5px solid var(--border)}
@@ -112,31 +110,50 @@
     .sup-row-hi{background:#fff8e0;border-radius:var(--radius-md);padding:11px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
     .sup-name{font-size:16px;font-weight:700;color:#7a4a00}
     .sup-num{font-size:14px;font-weight:500;color:#9a6000;font-family:var(--mono);text-decoration:none}
-    .sup-num:hover{text-decoration:underline}
     .remind-box{margin-top:10px;background:#fff0f0;border-radius:var(--radius-md);padding:14px;font-size:14px;font-weight:600;color:#791f1f;text-align:center;line-height:1.75}
 
-    /* ── EDITOR OVERLAY ── */
-    #editorOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;overflow-y:auto;padding:1.5rem 1rem}
-    #editorOverlay.open{display:block}
-    .editor-box{background:var(--surface);border-radius:var(--radius-xl);max-width:800px;margin:0 auto;overflow:hidden}
-    .editor-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:.5px solid var(--border);background:#18180f}
-    .editor-header h2{font-size:16px;font-weight:700;color:#fff}
-    .editor-close{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:8px;width:32px;height:32px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-    .editor-close:hover{background:rgba(255,255,255,.25)}
-    .editor-body{padding:1.5rem}
-    .editor-section{margin-bottom:1.5rem}
-    .editor-section-title{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
-    .editor-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
-    .editor-day-label{font-size:11px;font-weight:600;color:var(--text3);text-align:center;padding:4px 0}
-    .editor-shift-label{font-size:11px;font-weight:600;color:var(--text2);padding:6px 0;font-family:var(--mono);grid-column:1/-1;border-top:.5px solid var(--border);margin-top:4px;padding-top:10px}
-    .editor-cell input{width:100%;border:.5px solid var(--border2);border-radius:6px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--text);background:var(--surface);transition:border .15s}
-    .editor-cell input:focus{outline:none;border-color:#18180f}
-    .editor-actions{display:flex;gap:10px;padding:1rem 1.5rem;border-top:.5px solid var(--border);background:var(--surface2)}
-    .btn-save{flex:1;background:#18180f;color:#fff;border:none;border-radius:var(--radius-md);padding:12px;font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;transition:opacity .15s}
+    /* ADMIN PANEL */
+    #adminOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;overflow-y:auto;padding:1rem}
+    #adminOverlay.open{display:block}
+    .admin-box{background:var(--surface);border-radius:var(--radius-xl);max-width:860px;margin:0 auto;overflow:hidden}
+    .admin-header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;background:#18180f}
+    .admin-header h2{font-size:16px;font-weight:700;color:#fff}
+    .admin-close{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:8px;width:32px;height:32px;font-size:18px;cursor:pointer}
+    .admin-tabs{display:flex;border-bottom:.5px solid var(--border);background:var(--surface2)}
+    .admin-tab{padding:10px 18px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+    .admin-tab.active{color:var(--text);border-bottom-color:#18180f;background:var(--surface)}
+    .admin-body{padding:1.25rem 1.5rem}
+    .admin-section{display:none}.admin-section.active{display:block}
+
+    /* form elements */
+    .form-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:.5px solid var(--border)}
+    .form-row:last-child{border-bottom:none}
+    .form-label{font-size:13px;font-weight:500;color:var(--text);flex:1}
+    .form-input{border:.5px solid var(--border2);border-radius:6px;padding:7px 10px;font-size:13px;font-family:var(--font);color:var(--text);background:var(--surface);outline:none;transition:border .15s}
+    .form-input:focus{border-color:#18180f}
+    .form-input.wide{width:180px}
+    .form-input.med{width:130px}
+    .form-input.sm{width:80px}
+    .color-select{border:.5px solid var(--border2);border-radius:6px;padding:7px 10px;font-size:13px;font-family:var(--font);color:var(--text);background:var(--surface);outline:none;cursor:pointer}
+    .color-dot{width:14px;height:14px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+    .btn-danger{background:#fff0f0;color:#c42020;border:.5px solid rgba(196,32,32,.2);border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;font-family:var(--font);cursor:pointer}
+    .btn-add{background:#f0fef4;color:#16803c;border:.5px solid rgba(22,128,60,.2);border-radius:6px;padding:8px 14px;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;margin-top:12px}
+    .section-hint{font-size:11px;color:var(--text3);margin-bottom:12px}
+
+    .admin-actions{display:flex;gap:10px;padding:1rem 1.5rem;border-top:.5px solid var(--border);background:var(--surface2)}
+    .btn-save{flex:1;background:#18180f;color:#fff;border:none;border-radius:var(--radius-md);padding:11px;font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer}
     .btn-save:hover{opacity:.85}
-    .btn-export{background:var(--surface);color:var(--text);border:.5px solid var(--border2);border-radius:var(--radius-md);padding:12px 18px;font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;transition:background .15s}
-    .btn-export:hover{background:#f0efe9}
-    .save-toast{display:none;position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#18180f;color:#fff;border-radius:999px;padding:10px 24px;font-size:13px;font-weight:600;z-index:200;white-space:nowrap}
+
+    /* schedule editor grid */
+    .editor-section{margin-bottom:1.5rem}
+    .editor-section-title{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+    .editor-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+    .editor-day-label{font-size:11px;font-weight:600;color:var(--text3);text-align:center;padding:3px 0}
+    .editor-cell input{width:100%;border:.5px solid var(--border2);border-radius:6px;padding:5px 6px;font-size:11px;font-family:var(--font);color:var(--text);background:var(--surface);outline:none}
+    .editor-cell input:focus{border-color:#18180f}
+
+    /* toast */
+    .save-toast{display:none;position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#18180f;color:#fff;border-radius:999px;padding:10px 24px;font-size:13px;font-weight:600;z-index:300;white-space:nowrap}
     .save-toast.show{display:block}
 
     @media(min-width:700px){
@@ -147,38 +164,27 @@
       .desktop-table-wrap{display:block}
       .nav-title h1{font-size:24px}
     }
-    @media(max-width:699px){
-      .edit-btn{font-size:11px;padding:7px 12px}
-    }
+    @media(max-width:699px){.edit-btn{font-size:11px;padding:7px 12px}}
   </style>
 </head>
 <body>
 <div class="app">
-
-  <!-- top nav -->
   <div class="top-nav">
     <div class="nav-left">
       <div class="nav-icon">🛡️</div>
       <div class="nav-title">
         <h1>Security Guards Schedule</h1>
-        <p>13 guards · 4 shifts · Mon – Sun</p>
+        <p id="staffCount">Loading...</p>
       </div>
     </div>
     <div class="nav-right">
       <div class="date-badge" id="currentDate"></div>
-      <button class="edit-btn" onclick="openPasswordModal()">✏️ Edit Schedule</button>
+      <button class="edit-btn" onclick="openPasswordModal()">⚙️ Admin</button>
     </div>
   </div>
 
-  <!-- shift legend -->
-  <div class="shifts-strip">
-    <div class="shift-card"><div class="shift-dot" style="background:#378add"></div><div><div class="shift-card-label">Morning</div><div class="shift-card-time">7:30 AM – 3:30 PM</div></div></div>
-    <div class="shift-card"><div class="shift-dot" style="background:#ba7517"></div><div><div class="shift-card-label">Mid</div><div class="shift-card-time">10:00 AM – 7:00 PM</div></div></div>
-    <div class="shift-card"><div class="shift-dot" style="background:#639922"></div><div><div class="shift-card-label">Afternoon</div><div class="shift-card-time">3:30 PM – 11:30 PM</div></div></div>
-    <div class="shift-card"><div class="shift-dot" style="background:#7f77dd"></div><div><div class="shift-card-label">Overnight</div><div class="shift-card-time">11:30 PM – 7:30 AM</div></div></div>
-  </div>
+  <div class="shifts-strip" id="shiftsStrip"></div>
 
-  <!-- mobile day tabs -->
   <div class="day-tabs" id="dayTabs">
     <div class="day-tab active" data-day="0">Mon</div>
     <div class="day-tab" data-day="1">Tue</div>
@@ -189,300 +195,497 @@
     <div class="day-tab" data-day="6">Sun</div>
   </div>
 
-  <!-- mobile day panels (rendered by JS) -->
   <div id="mobilePanels"></div>
-
-  <!-- desktop table (rendered by JS) -->
   <div class="desktop-table-wrap" id="desktopTable"></div>
 
-  <!-- bottom info -->
   <div class="bottom">
     <div class="bottom-card">
       <div class="card-title">Contacts</div>
-      <div class="contact-row"><div class="av" style="background:#ffe8e0;color:#7a2e10">Ma</div><span class="contact-name">Marco</span><a class="contact-num" href="tel:3473187384">347-318-7384</a></div>
-      <div class="contact-row"><div class="av" style="background:#fef0d0;color:#c47a0a">He</div><span class="contact-name">Heming</span><a class="contact-num" href="tel:6462873129">646-287-3129</a></div>
-      <div class="contact-row"><div class="av" style="background:#daf2de;color:#2a8a3e">Ed</div><span class="contact-name">Edward</span><a class="contact-num" href="tel:6462513682">646-251-3682</a></div>
-      <div class="contact-row"><div class="av" style="background:#daf2de;color:#2a8a3e">Ya</div><span class="contact-name">Yaran</span><a class="contact-num" href="tel:9295099885">929-509-9885</a></div>
-      <div class="contact-row"><div class="av" style="background:#ffe4e4;color:#c42020">De</div><span class="contact-name">Desmond</span><a class="contact-num" href="tel:9294156106">929-415-6106</a></div>
-      <div class="contact-row"><div class="av" style="background:#f5e6d8;color:#8a4a1a">Jo</div><span class="contact-name">Jorge</span><a class="contact-num" href="tel:4072553854">407-255-3854</a></div>
-      <div class="contact-row"><div class="av" style="background:#ffe4f0;color:#c4256e">Js</div><span class="contact-name">Jose</span><a class="contact-num" href="tel:9293461123">929-346-1123</a></div>
-      <div class="contact-row"><div class="av" style="background:#d8eaf0;color:#2a5a6e">Al</div><span class="contact-name">Alan</span><a class="contact-num" href="tel:3472319009">347-231-9009</a></div>
-      <div class="contact-row"><div class="av" style="background:#d8dff5;color:#2d3a9e">Iv</div><span class="contact-name">Ivan</span><a class="contact-num" href="tel:9177412543">917-741-2543</a></div>
-      <div class="contact-row"><div class="av" style="background:#daeeff;color:#1a6fc4">Kv</div><span class="contact-name">Kevin</span><a class="contact-num" href="tel:3478676403">347-867-6403</a></div>
-      <div class="contact-row"><div class="av" style="background:#eae8ff;color:#6b3fc4">Br</div><span class="contact-name">Brandon</span><a class="contact-num" href="tel:3473390800">347-339-0800</a></div>
-      <div class="contact-row"><div class="av" style="background:#fde8d0;color:#c46010">Ta</div><span class="contact-name">Tai</span><a class="contact-num" href="tel:2012129356">201-212-9356</a></div>
+      <div id="contactsList"></div>
     </div>
     <div class="bottom-card">
       <div class="card-title">Lunch breaks</div>
-      <div class="break-row"><span class="break-name">Morning shift</span><span class="break-time">11:30 PM – 12:00 PM</span></div>
-      <div class="break-row"><span class="break-name">Morning shift</span><span class="break-time">12:15 PM – 12:45 PM</span></div>
-      <div class="break-row"><span class="break-name">Afternoon shift</span><span class="break-time">2:00 PM – 2:30 PM</span></div>
-      <div class="break-row"><span class="break-name">Evening shift</span><span class="break-time">5:00 PM – 5:30 PM</span></div>
-      <div class="break-row"><span class="break-name">Evening shift</span><span class="break-time">5:45 PM – 6:15 PM</span></div>
-      <div class="break-row"><span class="break-name">Overnight shift</span><span class="break-time">2:00 AM – 2:30 AM</span></div>
-      <div class="break-row"><span class="break-name">Overnight shift</span><span class="break-time">3:15 AM – 3:45 AM</span></div>
+      <div id="breaksList"></div>
       <div class="lunch-pill">30 min mandatory lunch break per shift</div>
       <div class="quote-box">"The Safety and Security of our Guests and Team Members is always a Top Priority."</div>
     </div>
     <div class="bottom-card">
       <div class="card-title">Supervisors</div>
-      <div class="sup-row-hi"><span class="sup-name">Fanny</span><a class="sup-num" href="tel:3476560600">347-656-0600</a></div>
-      <div class="sup-row-hi"><span class="sup-name">RAM</span><a class="sup-num" href="tel:5164992311">516-499-2311</a></div>
-      <div class="sup-row-hi"><span class="sup-name">Andy</span><a class="sup-num" href="tel:3472228880">347-222-8880</a></div>
+      <div id="supervisorsList"></div>
       <div class="remind-box">Please take your break<br>at the appropriate time.</div>
     </div>
   </div>
 </div>
 
-<!-- PASSWORD MODAL -->
+<!-- PASSWORD -->
 <div id="pwOverlay">
   <div class="pw-box">
     <div class="pw-icon">🔒</div>
     <div class="pw-title">Admin Access</div>
-    <div class="pw-sub">Enter password to edit the schedule</div>
-    <input class="pw-input" id="pwInput" type="password" maxlength="20" placeholder="••••••"
-      onkeydown="if(event.key==='Enter')checkPassword()"/>
+    <div class="pw-sub">Enter password to manage the schedule</div>
+    <input class="pw-input" id="pwInput" type="password" maxlength="20" placeholder="••••••" onkeydown="if(event.key==='Enter')checkPassword()"/>
     <div class="pw-error" id="pwError"></div>
     <button class="pw-btn" onclick="checkPassword()">Unlock</button>
     <button class="pw-cancel" onclick="closePwModal()">Cancel</button>
   </div>
 </div>
 
-<!-- EDITOR OVERLAY -->
-<div id="editorOverlay">
-  <div class="editor-box">
-    <div class="editor-header">
-      <h2>✏️ Edit Schedule</h2>
-      <button class="editor-close" onclick="closeEditor()">✕</button>
+<!-- ADMIN PANEL -->
+<div id="adminOverlay">
+  <div class="admin-box">
+    <div class="admin-header">
+      <h2>⚙️ Admin Panel</h2>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
     </div>
-    <div class="editor-body" id="editorBody"></div>
-    <div class="editor-actions">
-      <button class="btn-export" onclick="exportHTML()">⬇ Download HTML</button>
-      <button class="btn-save" onclick="saveChanges()">Save &amp; Apply Changes</button>
+    <div class="admin-tabs">
+      <div class="admin-tab active" onclick="switchTab('schedule')">📅 Schedule</div>
+      <div class="admin-tab" onclick="switchTab('employees')">👥 Employees</div>
+      <div class="admin-tab" onclick="switchTab('shifts')">🕐 Shifts</div>
+      <div class="admin-tab" onclick="switchTab('contacts')">📞 Contacts</div>
+      <div class="admin-tab" onclick="switchTab('settings')">🔧 Settings</div>
+    </div>
+    <div class="admin-body">
+
+      <!-- SCHEDULE TAB -->
+      <div class="admin-section active" id="tab-schedule">
+        <div class="section-hint">Edit who works each shift. Separate multiple names with commas.</div>
+        <div id="scheduleEditor"></div>
+      </div>
+
+      <!-- EMPLOYEES TAB -->
+      <div class="admin-section" id="tab-employees">
+        <div class="section-hint">Manage employees and their badge colors.</div>
+        <div id="employeeEditor"></div>
+        <button class="btn-add" onclick="addEmployee()">+ Add Employee</button>
+      </div>
+
+      <!-- SHIFTS TAB -->
+      <div class="admin-section" id="tab-shifts">
+        <div class="section-hint">Edit shift names and times.</div>
+        <div id="shiftEditor"></div>
+      </div>
+
+      <!-- CONTACTS TAB -->
+      <div class="admin-section" id="tab-contacts">
+        <div class="section-hint">Manage contact phone numbers and supervisors.</div>
+        <div style="font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Staff Contacts</div>
+        <div id="contactsEditor"></div>
+        <div style="font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin:16px 0 8px">Supervisors</div>
+        <div id="supervisorsEditor"></div>
+        <button class="btn-add" onclick="addSupervisor()">+ Add Supervisor</button>
+      </div>
+
+      <!-- SETTINGS TAB -->
+      <div class="admin-section" id="tab-settings">
+        <div class="section-hint">Change admin password.</div>
+        <div class="form-row">
+          <span class="form-label">New Password</span>
+          <input class="form-input wide" type="password" id="newPw1" placeholder="New password"/>
+        </div>
+        <div class="form-row">
+          <span class="form-label">Confirm Password</span>
+          <input class="form-input wide" type="password" id="newPw2" placeholder="Confirm password"/>
+        </div>
+        <div id="pwChangeMsg" style="font-size:12px;margin-top:8px;min-height:18px"></div>
+      </div>
+
+    </div>
+    <div class="admin-actions">
+      <button class="btn-save" onclick="saveAll()">💾 Save & Apply</button>
     </div>
   </div>
 </div>
 
-<div class="save-toast" id="toast">✓ Schedule updated!</div>
+<div class="save-toast" id="toast"></div>
 
 <script>
-// ── Data ──────────────────────────────────────────────────────────────────
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const DAYS_SHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 
-const SHIFTS = [
-  { label:'Morning shift',   time:'7:30 AM → 3:30 PM',  color:'#378add', key:'morning'   },
-  { label:'Mid shift',       time:'10:00 AM → 7:00 PM', color:'#ba7517', key:'mid'        },
-  { label:'Afternoon shift', time:'3:30 PM → 11:30 PM', color:'#639922', key:'afternoon'  },
-  { label:'Overnight shift', time:'11:30 PM → 7:30 AM', color:'#7f77dd', key:'overnight'  },
-  { label:'FSD',             time:'8:30 AM → 5:30 PM',  color:'#888',    key:'fsd'        },
+const COLOR_OPTIONS = [
+  {key:'b-purple',label:'Purple',bg:'#7c3aed'},
+  {key:'b-blue',  label:'Blue',  bg:'#1d6fc4'},
+  {key:'b-rose',  label:'Rose',  bg:'#9f1239'},
+  {key:'b-pink',  label:'Pink',  bg:'#c4256e'},
+  {key:'b-orange',label:'Orange',bg:'#c2540a'},
+  {key:'b-green', label:'Green', bg:'#16803c'},
+  {key:'b-cyan',  label:'Cyan',  bg:'#0e7490'},
+  {key:'b-red',   label:'Red',   bg:'#c42020'},
+  {key:'b-teal',  label:'Teal',  bg:'#0d6e5e'},
+  {key:'b-brown', label:'Brown', bg:'#7c3400'},
+  {key:'b-lime',  label:'Lime',  bg:'#4a7c10'},
+  {key:'b-indigo',label:'Indigo',bg:'#3730a3'},
 ];
+function colorBg(key){ return (COLOR_OPTIONS.find(c=>c.key===key)||{bg:'#888'}).bg; }
 
-const EMPLOYEE_COLORS = {
-  Brandon:'b-purple', Kevin:'b-blue', Heming:'b-amber', Jose:'b-pink',
-  Tai:'b-orange', Yaran:'b-green', Ivan:'b-indigo', Desmond:'b-red',
-  Marco:'b-coral', Jorge:'b-brown', Alan:'b-slate', RAM:'b-fsd',
+// ── App State ──────────────────────────────────────────────────────────────
+let state = {
+  password: '1234',
+  employees: [
+    {name:'Brandon', color:'b-purple'},
+    {name:'Kevin',   color:'b-blue'},
+    {name:'Heming',  color:'b-rose'},
+    {name:'Jose',    color:'b-pink'},
+    {name:'Tai',     color:'b-orange'},
+    {name:'Yaran',   color:'b-green'},
+    {name:'Ivan',    color:'b-cyan'},
+    {name:'Desmond', color:'b-red'},
+    {name:'Marco',   color:'b-teal'},
+    {name:'Jorge',   color:'b-brown'},
+    {name:'Alan',    color:'b-lime'},
+    {name:'Edward',  color:'b-indigo'},
+    {name:'RAM',     color:'b-fsd'},
+  ],
+  shifts: [
+    {key:'morning',   label:'Morning shift',   time:'7:30 AM → 3:30 PM',  color:'#378add'},
+    {key:'mid',       label:'Mid shift',       time:'10:00 AM → 7:00 PM', color:'#ba7517'},
+    {key:'afternoon', label:'Afternoon shift', time:'3:30 PM → 11:30 PM', color:'#639922'},
+    {key:'overnight', label:'Overnight shift', time:'11:30 PM → 7:30 AM', color:'#7f77dd'},
+    {key:'fsd',       label:'FSD',             time:'8:30 AM → 5:30 PM',  color:'#888'},
+  ],
+  contacts: [
+    {name:'Marco',   phone:'347-318-7384'},
+    {name:'Heming',  phone:'646-287-3129'},
+    {name:'Edward',  phone:'646-251-3682'},
+    {name:'Yaran',   phone:'929-509-9885'},
+    {name:'Desmond', phone:'929-415-6106'},
+    {name:'Jorge',   phone:'407-255-3854'},
+    {name:'Jose',    phone:'929-346-1123'},
+    {name:'Alan',    phone:'347-231-9009'},
+    {name:'Ivan',    phone:'917-741-2543'},
+    {name:'Kevin',   phone:'347-867-6403'},
+    {name:'Brandon', phone:'347-339-0800'},
+    {name:'Tai',     phone:'201-212-9356'},
+  ],
+  supervisors: [
+    {name:'Fanny', phone:'347-656-0600'},
+    {name:'RAM',   phone:'516-499-2311'},
+    {name:'Andy',  phone:'347-222-8880'},
+  ],
+  schedule: {
+    morning:   ['Brandon, Kevin','Jose, Kevin','Kevin, Heming','Heming, Brandon','Brandon, Jose, Tai','Jose, Tai','Brandon, Tai'],
+    mid:       ['Heming','Heming','Brandon','Kevin','Heming','Kevin','Heming'],
+    afternoon: ['Tai, Yaran','Yaran, Ivan','Yaran, Ivan','Desmond, Yaran','Ivan, Yaran','Ivan, Desmond','Yaran, Ivan'],
+    overnight: ['Marco, Desmond','Jorge, Marco','Alan, Marco','Marco, Jorge','Jorge, Desmond','Jose, Jorge','Jorge, Marco'],
+    fsd:       ['RAM','RAM','RAM','RAM','RAM','',''],
+  }
 };
-function colorFor(name){ return EMPLOYEE_COLORS[name.trim()] || 'b-gray'; }
 
-// schedule[shiftKey][dayIndex] = "Name1, Name2"
-let schedule = {
-  morning:   ['Brandon, Kevin','Jose, Kevin','Kevin, Heming','Heming, Brandon','Brandon, Jose, Tai','Jose, Tai','Brandon, Tai'],
-  mid:       ['Heming','Heming','Brandon','Kevin','Heming','Kevin','Heming'],
-  afternoon: ['Tai, Yaran','Yaran, Ivan','Yaran, Ivan','Desmond, Yaran','Ivan, Yaran','Ivan, Desmond','Yaran, Ivan'],
-  overnight: ['Marco, Desmond','Jorge, Marco','Alan, Marco','Marco, Jorge','Jorge, Desmond','Jose, Jorge','Jorge, Marco'],
-  fsd:       ['RAM','RAM','RAM','RAM','RAM','',''],
-};
+// ── Cloud ──────────────────────────────────────────────────────────────────
+const MASTER_KEY = '$2a$10$yL7ht7nVnUIXe4e/qGTpg.kXULfxRdguRyfVofbdsJ.iR5552oiwO';
+const BIN_ID = '69befca1b7ec241ddc8d494c';
 
-// ── Render ────────────────────────────────────────────────────────────────
+async function loadFromCloud(){
+  try {
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`,{headers:{'X-Master-Key':MASTER_KEY}});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    if(data && data.record && data.record.schedule){
+      state = data.record;
+      console.log('Cloud loaded OK');
+    }
+  } catch(e){ console.log('Load failed:', e.message); }
+  renderAll();
+}
+
+async function saveToCloud(){
+  try {
+    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':MASTER_KEY},
+      body: JSON.stringify(state)
+    });
+    return true;
+  } catch(e){ return false; }
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function colorFor(name){
+  const emp = state.employees.find(e=>e.name.trim()===name.trim());
+  return emp ? emp.color : 'b-fsd';
+}
+
 function namesHtml(str){
-  if(!str.trim()) return '';
-  return str.split(',').map(n => n.trim()).filter(Boolean)
-    .map(n => `<span class="badge ${colorFor(n)}">${n}</span>`).join('');
+  if(!str || !str.trim()) return '';
+  return str.split(',').map(n=>n.trim()).filter(Boolean)
+    .map(n=>`<span class="badge ${colorFor(n)}">${n}</span>`).join('');
+}
+
+function avatarStyle(name){
+  const emp = state.employees.find(e=>e.name===name);
+  const bg = emp ? colorBg(emp.color) : '#888';
+  return `background:${bg}22;color:${bg}`;
+}
+
+// ── Render ─────────────────────────────────────────────────────────────────
+function renderAll(){
+  renderStrip();
+  renderMobile();
+  renderDesktop();
+  renderContacts();
+  renderSupervisors();
+  bindTabs();
+  document.getElementById('staffCount').textContent =
+    `${state.employees.filter(e=>e.name!=='RAM').length} guards · ${state.shifts.length} shifts · Mon – Sun`;
+}
+
+function renderStrip(){
+  document.getElementById('shiftsStrip').innerHTML = state.shifts.map(s=>`
+    <div class="shift-card">
+      <div class="shift-dot" style="background:${s.color}"></div>
+      <div><div class="shift-card-label">${s.label}</div><div class="shift-card-time">${s.time}</div></div>
+    </div>`).join('');
 }
 
 function renderMobile(){
-  const panels = document.getElementById('mobilePanels');
-  panels.innerHTML = DAYS.map((day, di) => `
-    <div class="day-panel${di===0?' active':''}" data-day="${di}">
-      ${SHIFTS.map(s => {
-        const names = schedule[s.key][di];
+  document.getElementById('mobilePanels').innerHTML = DAYS.map((day,di)=>`
+    <div class="day-panel" data-day="${di}">
+      ${state.shifts.map(s=>{
+        const names = state.schedule[s.key]?.[di]||'';
         return `<div class="shift-block">
           <div class="shift-block-header">
             <div class="shift-block-dot" style="background:${s.color}"></div>
             <div><div class="shift-block-label">${s.label}</div><div class="shift-block-time">${s.time}</div></div>
           </div>
-          ${names.trim()
-            ? `<div class="shift-block-names">${namesHtml(names)}</div>`
-            : `<div class="shift-empty">No one scheduled</div>`}
+          ${names.trim()?`<div class="shift-block-names">${namesHtml(names)}</div>`:`<div class="shift-empty">No one scheduled</div>`}
         </div>`;
       }).join('')}
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function renderDesktop(){
-  const wrap = document.getElementById('desktopTable');
-  wrap.innerHTML = `<table>
+  document.getElementById('desktopTable').innerHTML = `<table>
     <thead><tr>
-      <th>Shift</th>
-      ${DAYS.map(d=>`<th class="day-th">${d}</th>`).join('')}
+      <th>Shift</th>${DAYS.map(d=>`<th class="day-th">${d}</th>`).join('')}
     </tr></thead>
     <tbody>
-      ${SHIFTS.map(s=>`<tr>
-        <td><div class="shift-time">${s.label === 'FSD' ? 'FSD &nbsp;8:30 → 5:30' : s.time}</div></td>
-        ${schedule[s.key].map(cell =>
-          `<td>${cell.trim()
-            ? `<div class="cell">${namesHtml(cell)}</div>`
-            : `<span class="dash">—</span>`}</td>`
+      ${state.shifts.map(s=>`<tr>
+        <td><div class="shift-time">${s.time}</div></td>
+        ${(state.schedule[s.key]||Array(7).fill('')).map(cell=>
+          `<td>${cell.trim()?`<div class="cell">${namesHtml(cell)}</div>`:`<span class="dash">—</span>`}</td>`
         ).join('')}
       </tr>`).join('')}
     </tbody>
   </table>`;
 }
 
-function renderAll(){ renderMobile(); renderDesktop(); bindTabs(); }
+function renderContacts(){
+  document.getElementById('contactsList').innerHTML = state.contacts.map(c=>`
+    <div class="contact-row">
+      <div class="av" style="${avatarStyle(c.name)}">${c.name.slice(0,2)}</div>
+      <span class="contact-name">${c.name}</span>
+      <a class="contact-num" href="tel:${c.phone.replace(/\D/g,'')}">${c.phone}</a>
+    </div>`).join('');
+}
+
+function renderSupervisors(){
+  document.getElementById('supervisorsList').innerHTML = state.supervisors.map(s=>`
+    <div class="sup-row-hi">
+      <span class="sup-name">${s.name}</span>
+      <a class="sup-num" href="tel:${s.phone.replace(/\D/g,'')}">${s.phone}</a>
+    </div>`).join('');
+}
 
 function bindTabs(){
-  document.querySelectorAll('.day-tab').forEach(tab => {
-    tab.onclick = () => {
-      const day = tab.dataset.day;
+  document.querySelectorAll('.day-tab').forEach(tab=>{
+    tab.onclick=()=>{
+      const day=tab.dataset.day;
       document.querySelectorAll('.day-tab').forEach(t=>t.classList.remove('active'));
       document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
       tab.classList.add('active');
       document.querySelector(`.day-panel[data-day="${day}"]`)?.classList.add('active');
     };
   });
-  const todayIndex = (new Date().getDay()+6)%7;
+  const ti=(new Date().getDay()+6)%7;
   document.querySelectorAll('.day-tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
-  const activeTab = document.querySelector(`.day-tab[data-day="${todayIndex}"]`);
-  const activePanel = document.querySelector(`.day-panel[data-day="${todayIndex}"]`);
-  if(activeTab) activeTab.classList.add('active');
-  if(activePanel) activePanel.classList.add('active');
+  document.querySelector(`.day-tab[data-day="${ti}"]`)?.classList.add('active');
+  document.querySelector(`.day-panel[data-day="${ti}"]`)?.classList.add('active');
 }
 
-// ── Editor ───────────────────────────────────────────────────────────────
-function openEditor(){
-  const body = document.getElementById('editorBody');
-  body.innerHTML = SHIFTS.map(s => `
-    <div class="editor-section">
-      <div class="editor-section-title">${s.label} &nbsp;<span style="color:${s.color};font-size:10px">●</span> ${s.time}</div>
-      <div class="editor-grid">
-        ${DAYS_SHORT.map(d=>`<div class="editor-day-label">${d}</div>`).join('')}
-        ${schedule[s.key].map((val, di) => `
-          <div class="editor-cell">
-            <input type="text" data-shift="${s.key}" data-day="${di}" value="${val}" placeholder="Names, comma-separated"/>
-          </div>`).join('')}
-      </div>
-    </div>
-  `).join('');
-  document.getElementById('editorOverlay').classList.add('open');
-}
-
-function closeEditor(){
-  document.getElementById('editorOverlay').classList.remove('open');
-}
-
-// ── JSONBin Cloud Sync ────────────────────────────────────────────────────
-const MASTER_KEY = '$2a$10$yL7ht7nVnUIXe4e/qGTpg.kXULfxRdguRyfVofbdsJ.iR5552oiwO';
-const ACCESS_KEY = '$2a$10$UW6K/lmuEwKkCVH8FOTj9OF7KJo7i9nIAlcLeB.v7XeL6Pk7IJ6GC';
-let BIN_ID = '69befca1b7ec241ddc8d494c';
-
-async function loadFromCloud(){
-  if(!BIN_ID) { renderAll(); return; }
-  try {
-    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-      headers: { 'X-Master-Key': MASTER_KEY }
-    });
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const data = await res.json();
-    if(data && data.record && data.record.morning) {
-      schedule = data.record;
-      console.log('Cloud data loaded OK');
-    }
-  } catch(e) {
-    console.log('Load failed, using default data:', e.message);
-  }
-  renderAll();
-}
-
-async function saveToCloud(){
-  try {
-    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': MASTER_KEY
-      },
-      body: JSON.stringify(schedule)
-    });
-    return true;
-  } catch(e) { return false; }
-}
-
-function saveChanges(){
-  document.querySelectorAll('#editorBody input').forEach(inp => {
-    schedule[inp.dataset.shift][parseInt(inp.dataset.day)] = inp.value;
-  });
-  renderAll();
-  closeEditor();
-  const toast = document.getElementById('toast');
-  toast.textContent = '⏳ Saving...';
-  toast.classList.add('show');
-  saveToCloud().then(ok => {
-    toast.textContent = ok ? '✓ Saved! All staff will see updates immediately.' : '✓ Saved locally (cloud sync failed)';
-    setTimeout(()=>toast.classList.remove('show'), 3000);
-  });
-}
-
-// ── Export (backup) ───────────────────────────────────────────────────────
-function exportHTML(){
-  document.querySelectorAll('#editorBody input').forEach(inp => {
-    schedule[inp.dataset.shift][parseInt(inp.dataset.day)] = inp.value;
-  });
-  const scheduleJson = JSON.stringify(schedule);
-  const blob = new Blob([document.documentElement.outerHTML.replace(
-    /let schedule = \{[\s\S]*?\};/,
-    `let schedule = ${scheduleJson};`
-  )], {type:'text/html'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'security_schedule.html';
-  a.click();
-}
-
-// ── Password ──────────────────────────────────────────────────────────────
-const ADMIN_PASSWORD = '1234';
-
+// ── Password ───────────────────────────────────────────────────────────────
 function openPasswordModal(){
-  document.getElementById('pwInput').value = '';
-  document.getElementById('pwError').textContent = '';
+  document.getElementById('pwInput').value='';
+  document.getElementById('pwError').textContent='';
   document.getElementById('pwInput').classList.remove('error');
   document.getElementById('pwOverlay').classList.add('open');
-  setTimeout(()=>document.getElementById('pwInput').focus(), 100);
+  setTimeout(()=>document.getElementById('pwInput').focus(),100);
 }
-function closePwModal(){
-  document.getElementById('pwOverlay').classList.remove('open');
-}
+function closePwModal(){ document.getElementById('pwOverlay').classList.remove('open'); }
 function checkPassword(){
-  const val = document.getElementById('pwInput').value;
-  if(val === ADMIN_PASSWORD){
-    closePwModal();
-    openEditor();
-  } else {
-    const inp = document.getElementById('pwInput');
+  const val=document.getElementById('pwInput').value;
+  if(val===state.password){ closePwModal(); openAdmin(); }
+  else {
+    const inp=document.getElementById('pwInput');
     inp.classList.add('error');
-    document.getElementById('pwError').textContent = 'Incorrect password. Try again.';
-    inp.value = '';
-    setTimeout(()=>inp.classList.remove('error'), 400);
+    document.getElementById('pwError').textContent='Incorrect password.';
+    inp.value='';
+    setTimeout(()=>inp.classList.remove('error'),400);
   }
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────
-const now = new Date();
-const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-document.getElementById('currentDate').textContent =
+// ── Admin Panel ────────────────────────────────────────────────────────────
+function openAdmin(){
+  buildScheduleEditor();
+  buildEmployeeEditor();
+  buildShiftEditor();
+  buildContactsEditor();
+  document.getElementById('adminOverlay').classList.add('open');
+}
+function closeAdmin(){ document.getElementById('adminOverlay').classList.remove('open'); }
+
+function switchTab(name){
+  document.querySelectorAll('.admin-tab').forEach((t,i)=>{
+    const tabs=['schedule','employees','shifts','contacts','settings'];
+    t.classList.toggle('active', tabs[i]===name);
+  });
+  document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+// Schedule editor
+function buildScheduleEditor(){
+  document.getElementById('scheduleEditor').innerHTML = state.shifts.map(s=>`
+    <div class="editor-section">
+      <div class="editor-section-title" style="color:${s.color}">${s.label} — ${s.time}</div>
+      <div class="editor-grid">
+        ${DAYS_SHORT.map(d=>`<div class="editor-day-label">${d}</div>`).join('')}
+        ${(state.schedule[s.key]||Array(7).fill('')).map((val,di)=>`
+          <div class="editor-cell">
+            <input type="text" data-shift="${s.key}" data-day="${di}" value="${val}" placeholder="Names"/>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+// Employee editor
+function buildEmployeeEditor(){
+  document.getElementById('employeeEditor').innerHTML = state.employees.map((emp,i)=>`
+    <div class="form-row" data-emp="${i}">
+      <div class="color-dot" style="background:${colorBg(emp.color)};width:14px;height:14px;border-radius:50%;flex-shrink:0"></div>
+      <input class="form-input med emp-name" data-i="${i}" value="${emp.name}" placeholder="Name"/>
+      <select class="color-select emp-color" data-i="${i}">
+        ${COLOR_OPTIONS.map(c=>`<option value="${c.key}" ${c.key===emp.color?'selected':''}>${c.label}</option>`).join('')}
+        ${emp.color==='b-fsd'?'<option value="b-fsd" selected>Gray (FSD)</option>':''}
+      </select>
+      <button class="btn-danger" onclick="removeEmployee(${i})">Remove</button>
+    </div>`).join('');
+
+  document.querySelectorAll('.emp-color').forEach(sel=>{
+    sel.onchange=()=>{
+      const dot=sel.closest('.form-row').querySelector('.color-dot');
+      dot.style.background=colorBg(sel.value);
+    };
+  });
+}
+
+function addEmployee(){
+  state.employees.push({name:'New Employee', color:'b-blue'});
+  buildEmployeeEditor();
+}
+function removeEmployee(i){
+  if(state.employees.length<=1) return;
+  state.employees.splice(i,1);
+  buildEmployeeEditor();
+}
+
+// Shift editor
+function buildShiftEditor(){
+  document.getElementById('shiftEditor').innerHTML = state.shifts.map((s,i)=>`
+    <div class="form-row">
+      <div class="shift-dot" style="background:${s.color};flex-shrink:0"></div>
+      <input class="form-input med shift-label" data-i="${i}" value="${s.label}" placeholder="Label"/>
+      <input class="form-input wide shift-time" data-i="${i}" value="${s.time}" placeholder="e.g. 7:30 AM → 3:30 PM"/>
+    </div>`).join('');
+}
+
+// Contacts editor
+function buildContactsEditor(){
+  document.getElementById('contactsEditor').innerHTML = state.contacts.map((c,i)=>`
+    <div class="form-row">
+      <span class="form-label">${c.name}</span>
+      <input class="form-input wide contact-phone" data-i="${i}" value="${c.phone}" placeholder="Phone"/>
+    </div>`).join('');
+
+  document.getElementById('supervisorsEditor').innerHTML = state.supervisors.map((s,i)=>`
+    <div class="form-row">
+      <input class="form-input med sup-name-input" data-i="${i}" value="${s.name}" placeholder="Name"/>
+      <input class="form-input wide sup-phone" data-i="${i}" value="${s.phone}" placeholder="Phone"/>
+      <button class="btn-danger" onclick="removeSupervisor(${i})">Remove</button>
+    </div>`).join('');
+}
+function addSupervisor(){
+  state.supervisors.push({name:'Name',phone:''});
+  buildContactsEditor();
+}
+function removeSupervisor(i){
+  state.supervisors.splice(i,1);
+  buildContactsEditor();
+}
+
+// ── Save All ───────────────────────────────────────────────────────────────
+function saveAll(){
+  // schedule
+  document.querySelectorAll('#scheduleEditor input').forEach(inp=>{
+    if(!state.schedule[inp.dataset.shift]) state.schedule[inp.dataset.shift]=Array(7).fill('');
+    state.schedule[inp.dataset.shift][parseInt(inp.dataset.day)]=inp.value;
+  });
+  // employees
+  document.querySelectorAll('#employeeEditor .form-row').forEach((row,i)=>{
+    const nameInp=row.querySelector('.emp-name');
+    const colorSel=row.querySelector('.emp-color');
+    if(nameInp && i<state.employees.length){
+      state.employees[i].name=nameInp.value;
+      state.employees[i].color=colorSel.value;
+    }
+  });
+  // shifts
+  document.querySelectorAll('#shiftEditor .shift-label').forEach(inp=>{
+    state.shifts[inp.dataset.i].label=inp.value;
+  });
+  document.querySelectorAll('#shiftEditor .shift-time').forEach(inp=>{
+    state.shifts[inp.dataset.i].time=inp.value;
+  });
+  // contacts
+  document.querySelectorAll('.contact-phone').forEach(inp=>{
+    state.contacts[inp.dataset.i].phone=inp.value;
+  });
+  // supervisors
+  document.querySelectorAll('.sup-name-input').forEach(inp=>{
+    state.supervisors[inp.dataset.i].name=inp.value;
+  });
+  document.querySelectorAll('.sup-phone').forEach(inp=>{
+    state.supervisors[inp.dataset.i].phone=inp.value;
+  });
+  // password
+  const p1=document.getElementById('newPw1').value;
+  const p2=document.getElementById('newPw2').value;
+  const msg=document.getElementById('pwChangeMsg');
+  if(p1||p2){
+    if(p1!==p2){ msg.style.color='#c42020'; msg.textContent='Passwords do not match.'; return; }
+    if(p1.length<3){ msg.style.color='#c42020'; msg.textContent='Password too short.'; return; }
+    state.password=p1;
+    document.getElementById('newPw1').value='';
+    document.getElementById('newPw2').value='';
+    msg.style.color='#16803c'; msg.textContent='Password changed!';
+    setTimeout(()=>msg.textContent='',3000);
+  }
+
+  renderAll();
+  closeAdmin();
+  const toast=document.getElementById('toast');
+  toast.textContent='⏳ Saving...';
+  toast.classList.add('show');
+  saveToCloud().then(ok=>{
+    toast.textContent=ok?'✓ Saved! Staff will see updates on refresh.':'✓ Saved locally (cloud sync failed)';
+    setTimeout(()=>toast.classList.remove('show'),3000);
+  });
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+const now=new Date();
+const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+document.getElementById('currentDate').textContent=
   `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
 
 loadFromCloud();
