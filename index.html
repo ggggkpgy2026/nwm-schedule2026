@@ -386,13 +386,13 @@ function closeEditor(){
 // ── JSONBin Cloud Sync ────────────────────────────────────────────────────
 const MASTER_KEY = '$2a$10$yL7ht7nVnUIXe4e/qGTpg.kXULfxRdguRyfVofbdsJ.iR5552oiwO';
 const ACCESS_KEY = '$2a$10$UW6K/lmuEwKkCVH8FOTj9OF7KJo7i9nIAlcLeB.v7XeL6Pk7IJ6GC';
-let BIN_ID = localStorage.getItem('schedule_bin_id') || '';
+let BIN_ID = '69befca1b7ec241ddc8d494c';
 
 async function loadFromCloud(){
   if(!BIN_ID) return;
   try {
     const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-      headers: { 'X-Access-Key': ACCESS_KEY }
+      headers: { 'X-Master-Key': MASTER_KEY }
     });
     const data = await res.json();
     if(data.record) { schedule = data.record; renderAll(); }
@@ -401,32 +401,14 @@ async function loadFromCloud(){
 
 async function saveToCloud(){
   try {
-    if(!BIN_ID) {
-      // First time: create a new bin
-      const res = await fetch('https://api.jsonbin.io/v3/b', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': MASTER_KEY,
-          'X-Bin-Name': 'security-schedule',
-          'X-Private': 'false'
-        },
-        body: JSON.stringify(schedule)
-      });
-      const data = await res.json();
-      BIN_ID = data.metadata.id;
-      localStorage.setItem('schedule_bin_id', BIN_ID);
-    } else {
-      // Update existing bin
-      await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': MASTER_KEY
-        },
-        body: JSON.stringify(schedule)
-      });
-    }
+    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': MASTER_KEY
+      },
+      body: JSON.stringify(schedule)
+    });
     return true;
   } catch(e) { return false; }
 }
