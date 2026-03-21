@@ -1,96 +1,593 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>员工排班表</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Guards Schedule</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<style>
-body {
-    font-family: Arial;
-    background: #f5f5f5;
-    text-align: center;
-}
+    :root {
+      --bg: #f0efe9;
+      --surface: #ffffff;
+      --surface2: #e9e8e2;
+      --border: rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.14);
+      --text: #18180f;
+      --text2: #5a5a50;
+      --text3: #9a9a8e;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      --font: 'Sora', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
 
-h1 {
-    margin-top: 20px;
-}
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.5rem 1rem 4rem;
+    }
 
-table {
-    margin: 20px auto;
-    border-collapse: collapse;
-    width: 90%;
-    max-width: 800px;
-    background: white;
-}
+    .app { max-width: 1140px; margin: 0 auto; }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-}
+    /* ── Header ── */
+    .header {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 1.5rem; gap: 12px;
+    }
+    .header-left { display: flex; align-items: center; gap: 14px; }
+    .header-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: #18180f; display: flex; align-items: center;
+      justify-content: center; font-size: 22px; flex-shrink: 0;
+    }
+    .header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.4px; line-height: 1.2; }
+    .header p { font-size: 12px; color: var(--text2); margin-top: 3px; }
+    .date-badge {
+      font-size: 12px; font-weight: 600; color: #791f1f;
+      background: #fff0f0; border: 1px solid rgba(163,45,45,0.22);
+      border-radius: var(--radius-md); padding: 7px 14px;
+      white-space: nowrap; font-family: var(--mono); flex-shrink: 0;
+    }
 
-th {
-    background: black;
-    color: white;
-}
+    /* ── Shift legend strip ── */
+    .shifts-strip {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 8px; margin-bottom: 1.25rem;
+    }
+    .shift-card {
+      background: var(--surface); border-radius: var(--radius-lg);
+      border: 0.5px solid var(--border2); padding: 12px 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .shift-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .shift-card-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 3px; }
+    .shift-card-time { font-size: 12px; font-weight: 600; color: var(--text); font-family: var(--mono); }
 
-tr:nth-child(even) {
-    background: #f2f2f2;
-}
+    /* ── Day selector tabs ── */
+    .day-tabs {
+      display: flex; gap: 6px; overflow-x: auto;
+      margin-bottom: 1rem; padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .day-tabs::-webkit-scrollbar { display: none; }
+    .day-tab {
+      flex-shrink: 0; padding: 8px 16px;
+      border-radius: 999px; font-size: 13px; font-weight: 600;
+      cursor: pointer; border: 0.5px solid var(--border2);
+      background: var(--surface); color: var(--text2);
+      transition: all 0.15s; user-select: none;
+    }
+    .day-tab.active {
+      background: #18180f; color: #fff; border-color: #18180f;
+    }
 
-</style>
+    /* ── Day schedule panel ── */
+    .day-panel { display: none; }
+    .day-panel.active { display: block; }
+
+    .shift-block {
+      background: var(--surface); border-radius: var(--radius-xl);
+      border: 0.5px solid var(--border2); margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .shift-block-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .shift-block-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .shift-block-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.6px; }
+    .shift-block-time { font-size: 14px; font-weight: 700; color: var(--text); font-family: var(--mono); }
+    .shift-block-names {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      padding: 14px 16px;
+    }
+    .shift-empty {
+      padding: 14px 16px; font-size: 13px; color: var(--text3); font-style: italic;
+    }
+
+    /* ── Name badges ── */
+    .badge {
+      display: inline-block; font-size: 14px; font-weight: 600;
+      padding: 7px 16px; border-radius: 8px; white-space: nowrap;
+    }
+    .b-blue   { background: #daeeff; color: #08407a; }
+    .b-purple { background: #eae8ff; color: #38318a; }
+    .b-green  { background: #daf2de; color: #1e5c28; }
+    .b-teal   { background: #d5f2ea; color: #0a5040; }
+    .b-amber  { background: #fef0d0; color: #7a4a00; }
+    .b-coral  { background: #ffe8e0; color: #7a2e10; }
+    .b-pink   { background: #ffe4f0; color: #7a1f46; }
+    .b-gray   { background: #eeecea; color: #3c3c36; }
+    .b-red    { background: #ffe4e4; color: #7a1a1a; }
+    .b-fsd    { background: var(--surface2); color: var(--text2); }
+
+    /* ── Desktop table (hidden on mobile) ── */
+    .desktop-table-wrap {
+      background: var(--surface); border-radius: var(--radius-xl);
+      border: 0.5px solid var(--border2); overflow: hidden;
+      margin-bottom: 1.5rem; display: none;
+    }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    thead tr { background: #18180f; }
+    thead th {
+      padding: 15px 8px; font-size: 11px; font-weight: 600;
+      color: rgba(255,255,255,0.4); text-align: center; letter-spacing: 0.4px;
+    }
+    thead th:first-child { text-align: left; padding-left: 20px; width: 200px; }
+    thead th.day-th { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 0; }
+    tbody tr { border-bottom: 0.5px solid var(--border); transition: background 0.1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #fafaf7; }
+    td { padding: 12px 6px; text-align: center; vertical-align: middle; }
+    td:first-child { text-align: left; padding-left: 20px; }
+    .shift-time { font-size: 12px; font-weight: 700; color: var(--text); font-family: var(--mono); white-space: nowrap; }
+    .cell { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .fsd-badge {
+      background: var(--surface2); color: var(--text2);
+      font-size: 12px; font-weight: 600;
+      padding: 5px 12px; border-radius: 7px; font-family: var(--mono);
+    }
+    .dash { color: var(--text3); font-size: 18px; }
+
+    /* ── Bottom info cards ── */
+    .bottom { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 1rem; }
+    .bottom-card {
+      background: var(--surface); border: 0.5px solid var(--border2);
+      border-radius: var(--radius-xl); padding: 1.1rem 1.1rem;
+    }
+    .card-title {
+      font-size: 10px; font-weight: 700; color: var(--text3);
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 12px; padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    /* Contacts */
+    .contact-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 0; border-bottom: 0.5px solid var(--border);
+    }
+    .contact-row:last-child { border-bottom: none; }
+    .av {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; flex-shrink: 0;
+    }
+    .contact-name { font-size: 15px; font-weight: 600; color: var(--text); flex: 1; }
+    .contact-num {
+      font-size: 13px; color: var(--text2); font-family: var(--mono);
+      text-decoration: none;
+    }
+    .contact-num:hover { color: var(--text); text-decoration: underline; }
+
+    /* Breaks */
+    .break-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 0.5px solid var(--border); font-size: 13px;
+    }
+    .break-row:last-of-type { border-bottom: none; }
+    .break-name { color: var(--text2); }
+    .break-time { color: var(--text); font-weight: 600; font-family: var(--mono); }
+    .lunch-pill {
+      margin-top: 12px; background: #daf2de; border-radius: var(--radius-md);
+      padding: 10px 14px; font-size: 13px; color: #1e5c28;
+      font-weight: 600; text-align: center;
+    }
+    .quote-box {
+      margin-top: 10px; background: var(--surface2); border-radius: var(--radius-md);
+      padding: 12px 14px; font-size: 13px; color: var(--text2);
+      font-style: italic; line-height: 1.65;
+    }
+
+    /* Supervisors */
+    .sup-row-hi {
+      background: #fff8e0; border-radius: var(--radius-md);
+      padding: 11px 14px; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .sup-name { font-size: 16px; font-weight: 700; color: #7a4a00; }
+    .sup-num {
+      font-size: 14px; font-weight: 500; color: #9a6000;
+      font-family: var(--mono); text-decoration: none;
+    }
+    .sup-num:hover { text-decoration: underline; }
+    .remind-box {
+      margin-top: 10px; background: #fff0f0; border-radius: var(--radius-md);
+      padding: 14px; font-size: 14px; font-weight: 600;
+      color: #791f1f; text-align: center; line-height: 1.75;
+    }
+
+    /* ── Responsive ── */
+    @media (min-width: 700px) {
+      body { padding: 2rem 1.5rem 4rem; }
+      .shifts-strip { grid-template-columns: repeat(4, 1fr); }
+      .bottom { grid-template-columns: 1fr 1fr 1fr; }
+      .day-tabs, .day-panel { display: none !important; }
+      .desktop-table-wrap { display: block; }
+      .header h1 { font-size: 24px; }
+    }
+  </style>
 </head>
-
 <body>
+<div class="app">
 
-<h1>📅 员工排班表</h1>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-icon">🛡️</div>
+      <div>
+        <h1>Security Guards Schedule</h1>
+        <p>13 guards · 4 shifts · Mon – Sun</p>
+      </div>
+    </div>
+    <div class="date-badge" id="currentDate"></div>
+  </div>
 
-<table>
-<tr>
-    <th>姓名</th>
-    <th>周一</th>
-    <th>周二</th>
-    <th>周三</th>
-    <th>周四</th>
-    <th>周五</th>
-    <th>周六</th>
-    <th>周日</th>
-</tr>
+  <!-- Shift legend -->
+  <div class="shifts-strip">
+    <div class="shift-card">
+      <div class="shift-dot" style="background:#378add"></div>
+      <div><div class="shift-card-label">Morning</div><div class="shift-card-time">7:30 AM – 3:30 PM</div></div>
+    </div>
+    <div class="shift-card">
+      <div class="shift-dot" style="background:#ba7517"></div>
+      <div><div class="shift-card-label">Mid</div><div class="shift-card-time">10:00 AM – 7:00 PM</div></div>
+    </div>
+    <div class="shift-card">
+      <div class="shift-dot" style="background:#639922"></div>
+      <div><div class="shift-card-label">Afternoon</div><div class="shift-card-time">3:30 PM – 11:30 PM</div></div>
+    </div>
+    <div class="shift-card">
+      <div class="shift-dot" style="background:#7f77dd"></div>
+      <div><div class="shift-card-label">Overnight</div><div class="shift-card-time">11:30 PM – 7:30 AM</div></div>
+    </div>
+  </div>
 
-<tr>
-    <td>张三</td>
-    <td>早班</td>
-    <td>休息</td>
-    <td>晚班</td>
-    <td>早班</td>
-    <td>休息</td>
-    <td>晚班</td>
-    <td>早班</td>
-</tr>
+  <!-- ── MOBILE: Day tabs + cards ── -->
+  <div class="day-tabs" id="dayTabs">
+    <div class="day-tab active" data-day="0">Mon</div>
+    <div class="day-tab" data-day="1">Tue</div>
+    <div class="day-tab" data-day="2">Wed</div>
+    <div class="day-tab" data-day="3">Thu</div>
+    <div class="day-tab" data-day="4">Fri</div>
+    <div class="day-tab" data-day="5">Sat</div>
+    <div class="day-tab" data-day="6">Sun</div>
+  </div>
 
-<tr>
-    <td>李四</td>
-    <td>晚班</td>
-    <td>早班</td>
-    <td>休息</td>
-    <td>晚班</td>
-    <td>早班</td>
-    <td>休息</td>
-    <td>晚班</td>
-</tr>
+  <!-- Mon -->
+  <div class="day-panel active" data-day="0">
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#378add"></div><div><div class="shift-block-label">Morning shift</div><div class="shift-block-time">7:30 AM → 3:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-purple">Brandon</span><span class="badge b-blue">Kevin</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#ba7517"></div><div><div class="shift-block-label">Mid shift</div><div class="shift-block-time">10:00 AM → 7:00 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-amber">Heming</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#639922"></div><div><div class="shift-block-label">Afternoon shift</div><div class="shift-block-time">3:30 PM → 11:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-teal">Tai</span><span class="badge b-green">Yaran</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#7f77dd"></div><div><div class="shift-block-label">Overnight shift</div><div class="shift-block-time">11:30 PM → 7:30 AM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-coral">Marco</span><span class="badge b-red">Desmond</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#888"></div><div><div class="shift-block-label">FSD</div><div class="shift-block-time">8:30 AM → 5:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-fsd">RAM</span></div>
+    </div>
+  </div>
 
-<tr>
-    <td>王五</td>
-    <td>休息</td>
-    <td>晚班</td>
-    <td>早班</td>
-    <td>休息</td>
-    <td>晚班</td>
-    <td>早班</td>
-    <td>休息</td>
-</tr>
+  <!-- Tue -->
+  <div class="day-panel" data-day="1">
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#378add"></div><div><div class="shift-block-label">Morning shift</div><div class="shift-block-time">7:30 AM → 3:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-pink">Jose</span><span class="badge b-blue">Kevin</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#ba7517"></div><div><div class="shift-block-label">Mid shift</div><div class="shift-block-time">10:00 AM → 7:00 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-amber">Heming</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#639922"></div><div><div class="shift-block-label">Afternoon shift</div><div class="shift-block-time">3:30 PM → 11:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-green">Yaran</span><span class="badge b-gray">Ivan</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#7f77dd"></div><div><div class="shift-block-label">Overnight shift</div><div class="shift-block-time">11:30 PM → 7:30 AM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-gray">Jorge</span><span class="badge b-coral">Marco</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#888"></div><div><div class="shift-block-label">FSD</div><div class="shift-block-time">8:30 AM → 5:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-fsd">RAM</span></div>
+    </div>
+  </div>
 
-</table>
+  <!-- Wed -->
+  <div class="day-panel" data-day="2">
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#378add"></div><div><div class="shift-block-label">Morning shift</div><div class="shift-block-time">7:30 AM → 3:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-blue">Kevin</span><span class="badge b-amber">Heming</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#ba7517"></div><div><div class="shift-block-label">Mid shift</div><div class="shift-block-time">10:00 AM → 7:00 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-purple">Brandon</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#639922"></div><div><div class="shift-block-label">Afternoon shift</div><div class="shift-block-time">3:30 PM → 11:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-green">Yaran</span><span class="badge b-gray">Ivan</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#7f77dd"></div><div><div class="shift-block-label">Overnight shift</div><div class="shift-block-time">11:30 PM → 7:30 AM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-gray">Alan</span><span class="badge b-coral">Marco</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#888"></div><div><div class="shift-block-label">FSD</div><div class="shift-block-time">8:30 AM → 5:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-fsd">RAM</span></div>
+    </div>
+  </div>
 
+  <!-- Thu -->
+  <div class="day-panel" data-day="3">
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#378add"></div><div><div class="shift-block-label">Morning shift</div><div class="shift-block-time">7:30 AM → 3:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-amber">Heming</span><span class="badge b-purple">Brandon</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#ba7517"></div><div><div class="shift-block-label">Mid shift</div><div class="shift-block-time">10:00 AM → 7:00 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-blue">Kevin</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#639922"></div><div><div class="shift-block-label">Afternoon shift</div><div class="shift-block-time">3:30 PM → 11:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-red">Desmond</span><span class="badge b-green">Yaran</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#7f77dd"></div><div><div class="shift-block-label">Overnight shift</div><div class="shift-block-time">11:30 PM → 7:30 AM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-coral">Marco</span><span class="badge b-gray">Jorge</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#888"></div><div><div class="shift-block-label">FSD</div><div class="shift-block-time">8:30 AM → 5:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-fsd">RAM</span></div>
+    </div>
+  </div>
+
+  <!-- Fri -->
+  <div class="day-panel" data-day="4">
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#378add"></div><div><div class="shift-block-label">Morning shift</div><div class="shift-block-time">7:30 AM → 3:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-purple">Brandon</span><span class="badge b-pink">Jose</span><span class="badge b-teal">Tai</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#ba7517"></div><div><div class="shift-block-label">Mid shift</div><div class="shift-block-time">10:00 AM → 7:00 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-amber">Heming</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#639922"></div><div><div class="shift-block-label">Afternoon shift</div><div class="shift-block-time">3:30 PM → 11:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-gray">Ivan</span><span class="badge b-green">Yaran</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#7f77dd"></div><div><div class="shift-block-label">Overnight shift</div><div class="shift-block-time">11:30 PM → 7:30 AM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-gray">Jorge</span><span class="badge b-red">Desmond</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#888"></div><div><div class="shift-block-label">FSD</div><div class="shift-block-time">8:30 AM → 5:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-fsd">RAM</span></div>
+    </div>
+  </div>
+
+  <!-- Sat -->
+  <div class="day-panel" data-day="5">
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#378add"></div><div><div class="shift-block-label">Morning shift</div><div class="shift-block-time">7:30 AM → 3:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-pink">Jose</span><span class="badge b-teal">Tai</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#ba7517"></div><div><div class="shift-block-label">Mid shift</div><div class="shift-block-time">10:00 AM → 7:00 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-blue">Kevin</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#639922"></div><div><div class="shift-block-label">Afternoon shift</div><div class="shift-block-time">3:30 PM → 11:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-gray">Ivan</span><span class="badge b-red">Desmond</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#7f77dd"></div><div><div class="shift-block-label">Overnight shift</div><div class="shift-block-time">11:30 PM → 7:30 AM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-pink">Jose</span><span class="badge b-gray">Jorge</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#888"></div><div><div class="shift-block-label">FSD</div><div class="shift-block-time">—</div></div></div>
+      <div class="shift-empty">No FSD scheduled</div>
+    </div>
+  </div>
+
+  <!-- Sun -->
+  <div class="day-panel" data-day="6">
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#378add"></div><div><div class="shift-block-label">Morning shift</div><div class="shift-block-time">7:30 AM → 3:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-purple">Brandon</span><span class="badge b-teal">Tai</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#ba7517"></div><div><div class="shift-block-label">Mid shift</div><div class="shift-block-time">10:00 AM → 7:00 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-amber">Heming</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#639922"></div><div><div class="shift-block-label">Afternoon shift</div><div class="shift-block-time">3:30 PM → 11:30 PM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-green">Yaran</span><span class="badge b-gray">Ivan</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#7f77dd"></div><div><div class="shift-block-label">Overnight shift</div><div class="shift-block-time">11:30 PM → 7:30 AM</div></div></div>
+      <div class="shift-block-names"><span class="badge b-gray">Jorge</span><span class="badge b-coral">Marco</span></div>
+    </div>
+    <div class="shift-block">
+      <div class="shift-block-header"><div class="shift-block-dot" style="background:#888"></div><div><div class="shift-block-label">FSD</div><div class="shift-block-time">—</div></div></div>
+      <div class="shift-empty">No FSD scheduled</div>
+    </div>
+  </div>
+
+  <!-- ── DESKTOP: full table ── -->
+  <div class="desktop-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Shift</th>
+          <th class="day-th">Monday</th>
+          <th class="day-th">Tuesday</th>
+          <th class="day-th">Wednesday</th>
+          <th class="day-th">Thursday</th>
+          <th class="day-th">Friday</th>
+          <th class="day-th">Saturday</th>
+          <th class="day-th">Sunday</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="shift-time">7:30 AM → 3:30 PM</div></td>
+          <td><div class="cell"><span class="badge b-purple">Brandon</span><span class="badge b-blue">Kevin</span></div></td>
+          <td><div class="cell"><span class="badge b-pink">Jose</span><span class="badge b-blue">Kevin</span></div></td>
+          <td><div class="cell"><span class="badge b-blue">Kevin</span><span class="badge b-amber">Heming</span></div></td>
+          <td><div class="cell"><span class="badge b-amber">Heming</span><span class="badge b-purple">Brandon</span></div></td>
+          <td><div class="cell"><span class="badge b-purple">Brandon</span><span class="badge b-pink">Jose</span><span class="badge b-teal">Tai</span></div></td>
+          <td><div class="cell"><span class="badge b-pink">Jose</span><span class="badge b-teal">Tai</span></div></td>
+          <td><div class="cell"><span class="badge b-purple">Brandon</span><span class="badge b-teal">Tai</span></div></td>
+        </tr>
+        <tr>
+          <td><div class="shift-time">10:00 AM → 7:00 PM</div></td>
+          <td><span class="badge b-amber">Heming</span></td>
+          <td><span class="badge b-amber">Heming</span></td>
+          <td><span class="badge b-purple">Brandon</span></td>
+          <td><span class="badge b-blue">Kevin</span></td>
+          <td><span class="badge b-amber">Heming</span></td>
+          <td><span class="badge b-blue">Kevin</span></td>
+          <td><span class="badge b-amber">Heming</span></td>
+        </tr>
+        <tr>
+          <td><div class="shift-time">3:30 PM → 11:30 PM</div></td>
+          <td><div class="cell"><span class="badge b-teal">Tai</span><span class="badge b-green">Yaran</span></div></td>
+          <td><div class="cell"><span class="badge b-green">Yaran</span><span class="badge b-gray">Ivan</span></div></td>
+          <td><div class="cell"><span class="badge b-green">Yaran</span><span class="badge b-gray">Ivan</span></div></td>
+          <td><div class="cell"><span class="badge b-red">Desmond</span><span class="badge b-green">Yaran</span></div></td>
+          <td><div class="cell"><span class="badge b-gray">Ivan</span><span class="badge b-green">Yaran</span></div></td>
+          <td><div class="cell"><span class="badge b-gray">Ivan</span><span class="badge b-red">Desmond</span></div></td>
+          <td><div class="cell"><span class="badge b-green">Yaran</span><span class="badge b-gray">Ivan</span></div></td>
+        </tr>
+        <tr>
+          <td><div class="shift-time">11:30 PM → 7:30 AM</div></td>
+          <td><div class="cell"><span class="badge b-coral">Marco</span><span class="badge b-red">Desmond</span></div></td>
+          <td><div class="cell"><span class="badge b-gray">Jorge</span><span class="badge b-coral">Marco</span></div></td>
+          <td><div class="cell"><span class="badge b-gray">Alan</span><span class="badge b-coral">Marco</span></div></td>
+          <td><div class="cell"><span class="badge b-coral">Marco</span><span class="badge b-gray">Jorge</span></div></td>
+          <td><div class="cell"><span class="badge b-gray">Jorge</span><span class="badge b-red">Desmond</span></div></td>
+          <td><div class="cell"><span class="badge b-pink">Jose</span><span class="badge b-gray">Jorge</span></div></td>
+          <td><div class="cell"><span class="badge b-gray">Jorge</span><span class="badge b-coral">Marco</span></div></td>
+        </tr>
+        <tr>
+          <td><div class="shift-time">FSD &nbsp;8:30 → 5:30</div></td>
+          <td><span class="fsd-badge">RAM</span></td>
+          <td><span class="fsd-badge">RAM</span></td>
+          <td><span class="fsd-badge">RAM</span></td>
+          <td><span class="fsd-badge">RAM</span></td>
+          <td><span class="fsd-badge">RAM</span></td>
+          <td><span class="dash">—</span></td>
+          <td><span class="dash">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Bottom info -->
+  <div class="bottom">
+    <div class="bottom-card">
+      <div class="card-title">Contacts</div>
+      <div class="contact-row"><div class="av" style="background:#daf2de;color:#1e5c28">Ma</div><span class="contact-name">Marco</span><a class="contact-num" href="tel:3473187384">347-318-7384</a></div>
+      <div class="contact-row"><div class="av" style="background:#fef0d0;color:#7a4a00">He</div><span class="contact-name">Heming</span><a class="contact-num" href="tel:6462873129">646-287-3129</a></div>
+      <div class="contact-row"><div class="av" style="background:#daf2de;color:#1e5c28">Ed</div><span class="contact-name">Edward</span><a class="contact-num" href="tel:6462513682">646-251-3682</a></div>
+      <div class="contact-row"><div class="av" style="background:#daf2de;color:#1e5c28">Ya</div><span class="contact-name">Yaran</span><a class="contact-num" href="tel:9295099885">929-509-9885</a></div>
+      <div class="contact-row"><div class="av" style="background:#ffe4e4;color:#7a1a1a">De</div><span class="contact-name">Desmond</span><a class="contact-num" href="tel:9294156106">929-415-6106</a></div>
+      <div class="contact-row"><div class="av" style="background:#eeecea;color:#3c3c36">Jo</div><span class="contact-name">Jorge</span><a class="contact-num" href="tel:4072553854">407-255-3854</a></div>
+      <div class="contact-row"><div class="av" style="background:#ffe4f0;color:#7a1f46">Js</div><span class="contact-name">Jose</span><a class="contact-num" href="tel:9293461123">929-346-1123</a></div>
+      <div class="contact-row"><div class="av" style="background:#eeecea;color:#3c3c36">Al</div><span class="contact-name">Alan</span><a class="contact-num" href="tel:3472319009">347-231-9009</a></div>
+      <div class="contact-row"><div class="av" style="background:#eeecea;color:#3c3c36">Iv</div><span class="contact-name">Ivan</span><a class="contact-num" href="tel:9177412543">917-741-2543</a></div>
+      <div class="contact-row"><div class="av" style="background:#daeeff;color:#08407a">Kv</div><span class="contact-name">Kevin</span><a class="contact-num" href="tel:3478676403">347-867-6403</a></div>
+      <div class="contact-row"><div class="av" style="background:#eae8ff;color:#38318a">Br</div><span class="contact-name">Brandon</span><a class="contact-num" href="tel:3473390800">347-339-0800</a></div>
+      <div class="contact-row"><div class="av" style="background:#d5f2ea;color:#0a5040">Ta</div><span class="contact-name">Tai</span><a class="contact-num" href="tel:2012129356">201-212-9356</a></div>
+    </div>
+
+    <div class="bottom-card">
+      <div class="card-title">Lunch breaks</div>
+      <div class="break-row"><span class="break-name">Morning shift</span><span class="break-time">11:30 – 12:00</span></div>
+      <div class="break-row"><span class="break-name">Morning shift</span><span class="break-time">12:15 – 12:45</span></div>
+      <div class="break-row"><span class="break-name">Afternoon shift</span><span class="break-time">2:00 – 2:30</span></div>
+      <div class="break-row"><span class="break-name">Evening shift</span><span class="break-time">5:00 – 5:30</span></div>
+      <div class="break-row"><span class="break-name">Evening shift</span><span class="break-time">5:45 – 6:15</span></div>
+      <div class="break-row"><span class="break-name">Overnight shift</span><span class="break-time">2:00 – 2:30 AM</span></div>
+      <div class="break-row"><span class="break-name">Overnight shift</span><span class="break-time">3:15 – 3:45 AM</span></div>
+      <div class="lunch-pill">30 min mandatory lunch break per shift</div>
+      <div class="quote-box">"The Safety and Security of our Guests and Team Members is always a Top Priority."</div>
+    </div>
+
+    <div class="bottom-card">
+      <div class="card-title">Supervisors</div>
+      <div class="sup-row-hi"><span class="sup-name">Fanny</span><a class="sup-num" href="tel:3476560600">347-656-0600</a></div>
+      <div class="sup-row-hi"><span class="sup-name">RAM</span><a class="sup-num" href="tel:5164992311">516-499-2311</a></div>
+      <div class="sup-row-hi"><span class="sup-name">Andy</span><a class="sup-num" href="tel:3472228880">347-222-8880</a></div>
+      <div class="remind-box">Please take your break<br>at the appropriate time.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Current date
+  const now = new Date();
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('currentDate').textContent =
+    `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+
+  const tabs = document.querySelectorAll('.day-tab');
+  const panels = document.querySelectorAll('.day-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const day = tab.dataset.day;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.day-panel[data-day="${day}"]`).classList.add('active');
+    });
+  });
+
+  // Auto-select today's tab
+  const todayIndex = (new Date().getDay() + 6) % 7;
+  if (todayIndex < 7) {
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    tabs[todayIndex].classList.add('active');
+    panels[todayIndex].classList.add('active');
+  }
+</script>
 </body>
 </html>
