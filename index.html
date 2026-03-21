@@ -389,7 +389,7 @@ const ACCESS_KEY = '$2a$10$UW6K/lmuEwKkCVH8FOTj9OF7KJo7i9nIAlcLeB.v7XeL6Pk7IJ6GC
 let BIN_ID = '69befca1b7ec241ddc8d494c';
 
 async function loadFromCloud(){
-  if(!BIN_ID) return;
+  if(!BIN_ID) { renderAll(); return; }
   try {
     const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
       headers: { 'X-Master-Key': MASTER_KEY }
@@ -398,12 +398,12 @@ async function loadFromCloud(){
     const data = await res.json();
     if(data && data.record && data.record.morning) {
       schedule = data.record;
-      renderAll();
       console.log('Cloud data loaded OK');
-    } else {
-      console.log('Unexpected data format:', data);
     }
-  } catch(e) { console.log('Load failed:', e.message); }
+  } catch(e) {
+    console.log('Load failed, using default data:', e.message);
+  }
+  renderAll();
 }
 
 async function saveToCloud(){
@@ -484,7 +484,6 @@ const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov
 document.getElementById('currentDate').textContent =
   `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
 
-renderAll();
 loadFromCloud();
 </script>
 </body>
