@@ -70,11 +70,12 @@
 
     /* ── badges ── */
     .badge{display:inline-block;font-size:14px;font-weight:600;padding:7px 16px;border-radius:8px;white-space:nowrap}
-    .b-blue{background:#daeeff;color:#08407a}.b-purple{background:#eae8ff;color:#38318a}
-    .b-green{background:#daf2de;color:#1e5c28}.b-teal{background:#d5f2ea;color:#0a5040}
-    .b-amber{background:#fef0d0;color:#7a4a00}.b-coral{background:#ffe8e0;color:#7a2e10}
-    .b-pink{background:#ffe4f0;color:#7a1f46}.b-gray{background:#eeecea;color:#3c3c36}
-    .b-red{background:#ffe4e4;color:#7a1a1a}.b-fsd{background:var(--surface2);color:var(--text2)}
+    .b-blue{background:#1a6fc4;color:#fff}.b-purple{background:#6b3fc4;color:#fff}
+    .b-green{background:#2a8a3e;color:#fff}.b-teal{background:#0e8a6e;color:#fff}
+    .b-amber{background:#c47a0a;color:#fff}.b-coral{background:#c4451a;color:#fff}
+    .b-pink{background:#c4256e;color:#fff}.b-gray{background:#3a7a3a;color:#fff}
+    .b-red{background:#c42020;color:#fff}.b-fsd{background:var(--surface2);color:var(--text2)}
+    .b-indigo{background:#1a4a8a;color:#fff}.b-brown{background:#8a4a1a;color:#fff}
 
     /* ── desktop table ── */
     .desktop-table-wrap{background:var(--surface);border-radius:var(--radius-xl);border:.5px solid var(--border2);overflow:hidden;margin-bottom:1.5rem;display:none}
@@ -279,8 +280,8 @@ const SHIFTS = [
 
 const EMPLOYEE_COLORS = {
   Brandon:'b-purple', Kevin:'b-blue', Heming:'b-amber', Jose:'b-pink',
-  Tai:'b-teal', Yaran:'b-green', Ivan:'b-gray', Desmond:'b-red',
-  Marco:'b-coral', Jorge:'b-gray', Alan:'b-gray', RAM:'b-fsd',
+  Tai:'b-teal', Yaran:'b-green', Ivan:'b-indigo', Desmond:'b-red',
+  Marco:'b-coral', Jorge:'b-gray', Alan:'b-brown', RAM:'b-fsd',
 };
 function colorFor(name){ return EMPLOYEE_COLORS[name.trim()] || 'b-gray'; }
 
