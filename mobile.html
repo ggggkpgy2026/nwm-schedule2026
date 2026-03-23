@@ -9,119 +9,99 @@
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
       --bg:#f2f1ec;--surface:#fff;--surface2:#e8e7e1;
-      --border:rgba(0,0,0,.08);--text:#18180f;--text2:#5a5a50;--text3:#9a9a8e;
+      --border:rgba(0,0,0,.07);--text:#18180f;--text2:#5a5a50;--text3:#9a9a8e;
       --font:'Sora',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
     }
     html,body{height:100%;overflow:hidden}
     body{font-family:var(--font);background:var(--bg);color:var(--text);display:flex;flex-direction:column}
-
-    /* ── Header ── */
-    .header{padding:12px 16px 8px;background:var(--bg);flex-shrink:0}
-    .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-    .header-title{font-size:16px;font-weight:700;letter-spacing:-.3px}
-    .header-date{font-size:11px;font-weight:600;color:#791f1f;background:#fff0f0;border:1px solid rgba(163,45,45,.2);border-radius:6px;padding:4px 10px;font-family:var(--mono)}
-
-    /* ── Day pills ── */
-    .day-row{display:flex;gap:5px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
-    .day-row::-webkit-scrollbar{display:none}
-    .day-pill{flex-shrink:0;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;border:.5px solid rgba(0,0,0,.12);background:var(--surface);color:var(--text2);transition:all .15s;user-select:none;text-align:center}
-    .day-pill.active{background:#18180f;color:#fff;border-color:#18180f}
-    .day-pill.today-pill{border-color:#378add;color:#1d6fc4}
-    .day-pill.today-pill.active{background:#1d6fc4;color:#fff;border-color:#1d6fc4}
-
-    /* ── Tabs ── */
-    .tabs{display:flex;border-bottom:.5px solid var(--border);background:var(--surface);flex-shrink:0}
-    .tab{flex:1;padding:8px 4px;font-size:11px;font-weight:600;color:var(--text3);text-align:center;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
-    .tab.active{color:var(--text);border-bottom-color:#18180f}
-
-    /* ── Scroll area ── */
-    .scroll-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px 12px 20px}
-
-    /* ── Schedule view ── */
-    .shift-row{background:var(--surface);border-radius:10px;margin-bottom:7px;overflow:hidden;border:.5px solid var(--border)}
-    .shift-head{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:.5px solid var(--border)}
-    .shift-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-    .shift-info{flex:1}
-    .shift-name{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
-    .shift-time{font-size:12px;font-weight:700;color:var(--text);font-family:var(--mono)}
-    .shift-body{padding:8px 12px;display:flex;flex-wrap:wrap;gap:5px}
-    .shift-empty{padding:8px 12px;font-size:12px;color:var(--text3);font-style:italic}
-
-    /* badges */
-    .badge{display:inline-block;font-size:12px;font-weight:600;padding:4px 11px;border-radius:6px;white-space:nowrap}
-    .b-purple{background:#7c3aed;color:#fff}.b-blue{background:#1d6fc4;color:#fff}
-    .b-rose{background:#9f1239;color:#fff}.b-pink{background:#c4256e;color:#fff}
-    .b-orange{background:#c2540a;color:#fff}.b-green{background:#16803c;color:#fff}
-    .b-cyan{background:#0e7490;color:#fff}.b-red{background:#c42020;color:#fff}
-    .b-teal{background:#0d6e5e;color:#fff}.b-brown{background:#7c3400;color:#fff}
-    .b-lime{background:#4a7c10;color:#fff}.b-indigo{background:#3730a3;color:#fff}
-    .b-fsd{background:var(--surface2);color:var(--text2)}
-
-    /* ── Contacts view ── */
-    .contact-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:.5px solid var(--border)}
-    .contact-row:last-child{border-bottom:none}
-    .av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-    .contact-name{font-size:13px;font-weight:600;color:var(--text);flex:1}
-    .call-btn{display:flex;align-items:center;gap:5px;background:#f0fef4;color:#16803c;border:.5px solid rgba(22,128,60,.25);border-radius:6px;padding:5px 10px;font-size:12px;font-weight:600;font-family:var(--font);text-decoration:none;white-space:nowrap}
-    .section-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin:14px 0 6px}
-    .section-label:first-child{margin-top:0}
-    .sup-row{display:flex;align-items:center;justify-content:space-between;background:#fff8e0;border-radius:8px;padding:8px 12px;margin-bottom:6px}
-    .sup-name{font-size:13px;font-weight:700;color:#7a4a00}
-    .sup-call{display:flex;align-items:center;gap:5px;background:#fff3cd;color:#7a4a00;border:.5px solid rgba(122,74,0,.2);border-radius:6px;padding:5px 10px;font-size:12px;font-weight:600;font-family:var(--font);text-decoration:none}
-
-    /* ── Breaks view ── */
-    .break-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:.5px solid var(--border)}
-    .break-row:last-of-type{border-bottom:none}
-    .break-name{font-size:12px;color:var(--text2)}
-    .break-time{font-size:12px;font-weight:600;color:var(--text);font-family:var(--mono)}
-    .break-note{margin-top:10px;background:#daf2de;border-radius:8px;padding:8px 12px;font-size:12px;color:#1e5c28;font-weight:600;text-align:center}
-
-    /* loading */
-    .loading{text-align:center;padding:2rem;color:var(--text3);font-size:13px}
+    .header{padding:14px 14px 8px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+    .header-title{font-size:14px;font-weight:700}
+    .date-badge{font-size:10px;font-weight:600;color:#791f1f;background:#fff0f0;border:1px solid rgba(163,45,45,.2);border-radius:5px;padding:3px 7px;font-family:var(--mono)}
+    .legend{display:flex;gap:8px;padding:0 14px 8px;flex-wrap:wrap;flex-shrink:0}
+    .legend-item{display:flex;align-items:center;gap:3px;font-size:9px;color:var(--text2)}
+    .legend-dot{width:8px;height:8px;border-radius:2px;display:inline-block;flex-shrink:0}
+    .scroll-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 10px 20px}
+    .grid-header{display:grid;grid-template-columns:30px repeat(7,1fr);gap:2px;margin-bottom:2px;position:sticky;top:0;background:var(--bg);z-index:1;padding-bottom:3px}
+    .day-label{text-align:center;font-size:9px;font-weight:700;padding:3px 1px;border-radius:5px;color:var(--text3)}
+    .day-label.today{background:#18180f;color:#fff}
+    .shift-row{display:grid;grid-template-columns:30px repeat(7,1fr);gap:2px;margin-bottom:2px}
+    .shift-label{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+    .shift-dot{width:6px;height:6px;border-radius:50%}
+    .shift-name{font-size:7px;font-weight:700;color:#888;text-transform:uppercase}
+    .shift-cell{background:var(--surface);border-radius:5px;border:.5px solid var(--border);padding:3px 2px;min-height:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+    .shift-cell.today{background:#eef5ff;border-color:rgba(55,138,221,.2)}
+    .name-badge{font-size:8px;font-weight:700;padding:1px 3px;border-radius:3px;color:#fff;text-align:center;white-space:nowrap;width:100%}
+    .divider{display:flex;align-items:center;gap:8px;margin:14px 0 10px}
+    .divider-line{flex:1;height:.5px;background:rgba(0,0,0,.1)}
+    .divider-label{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.6px}
+    .contacts-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+    .contact-card{background:var(--surface);border-radius:8px;border:.5px solid var(--border);padding:7px 8px;display:flex;align-items:center;gap:7px}
+    .av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
+    .contact-name{font-size:11px;font-weight:600;color:var(--text)}
+    .contact-phone{font-size:10px;color:var(--text2);font-family:var(--mono);text-decoration:none}
+    .sup-row{background:#fff8e0;border-radius:8px;padding:8px 12px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between}
+    .sup-name{font-size:12px;font-weight:700;color:#7a4a00}
+    .sup-phone{font-size:11px;font-weight:600;color:#9a6000;font-family:var(--mono);text-decoration:none}
   </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-top">
-    <div class="header-title">🛡️ Security Schedule</div>
-    <div class="header-date" id="dateLabel"></div>
+  <div class="header-title">🛡️ Schedule</div>
+  <div class="date-badge" id="dateLabel"></div>
+</div>
+
+<div class="legend">
+  <span class="legend-item"><span class="legend-dot" style="background:#378add"></span>AM 7:30–3:30</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#ba7517"></span>Mid 10–7</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#639922"></span>PM 3:30–11:30</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#7f77dd"></span>Night 11:30–7:30</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#888"></span>FSD 8:30–5:30</span>
+</div>
+
+<div class="scroll-area">
+  <div id="scheduleGrid"></div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-label">Contacts</span>
+    <div class="divider-line"></div>
   </div>
-  <div class="day-row" id="dayRow"></div>
-</div>
+  <div class="contacts-grid" id="contactsList"></div>
 
-<div class="tabs">
-  <div class="tab active" onclick="switchView('schedule')">📅 Schedule</div>
-  <div class="tab" onclick="switchView('contacts')">📞 Contacts</div>
-  <div class="tab" onclick="switchView('breaks')">☕ Breaks</div>
-</div>
-
-<div class="scroll-area" id="scrollArea">
-  <div class="loading">Loading...</div>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-label">Supervisors</span>
+    <div class="divider-line"></div>
+  </div>
+  <div id="supsList"></div>
 </div>
 
 <script>
-const DAYS_SHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const DAYS_FULL  = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const MASTER_KEY = '$2a$10$yL7ht7nVnUIXe4e/qGTpg.kXULfxRdguRyfVofbdsJ.iR5552oiwO';
-const BIN_ID     = '69befca1b7ec241ddc8d494c';
+if(!/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+  window.location.replace('index.html');
+}
 
-let state = {
+const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const MASTER_KEY='$2a$10$yL7ht7nVnUIXe4e/qGTpg.kXULfxRdguRyfVofbdsJ.iR5552oiwO';
+const BIN_ID='69befca1b7ec241ddc8d494c';
+
+let state={
   employees:[
-    {name:'Brandon',color:'b-purple'},{name:'Kevin',color:'b-blue'},
-    {name:'Heming',color:'b-rose'},{name:'Jose',color:'b-pink'},
-    {name:'Tai',color:'b-orange'},{name:'Yaran',color:'b-green'},
-    {name:'Ivan',color:'b-cyan'},{name:'Desmond',color:'b-red'},
-    {name:'Marco',color:'b-teal'},{name:'Jorge',color:'b-brown'},
-    {name:'Alan',color:'b-lime'},{name:'Edward',color:'b-indigo'},
-    {name:'RAM',color:'b-fsd'},
+    {name:'Brandon',color:'#7c3aed'},{name:'Kevin',color:'#1d6fc4'},
+    {name:'Heming',color:'#9f1239'},{name:'Jose',color:'#c4256e'},
+    {name:'Tai',color:'#c2540a'},{name:'Yaran',color:'#16803c'},
+    {name:'Ivan',color:'#0e7490'},{name:'Desmond',color:'#c42020'},
+    {name:'Marco',color:'#0d6e5e'},{name:'Jorge',color:'#7c3400'},
+    {name:'Alan',color:'#4a7c10'},{name:'Edward',color:'#3730a3'},
+    {name:'RAM',color:'#888'},
   ],
   shifts:[
-    {key:'morning',  label:'Morning shift',  time:'7:30 AM → 3:30 PM', color:'#378add'},
-    {key:'mid',      label:'Mid shift',      time:'10:00 AM → 7:00 PM',color:'#ba7517'},
-    {key:'afternoon',label:'Afternoon shift',time:'3:30 PM → 11:30 PM',color:'#639922'},
-    {key:'overnight',label:'Overnight shift',time:'11:30 PM → 7:30 AM',color:'#7f77dd'},
-    {key:'fsd',      label:'FSD',            time:'8:30 AM → 5:30 PM', color:'#888'},
+    {key:'morning',  label:'AM',    color:'#378add'},
+    {key:'mid',      label:'Mid',   color:'#ba7517'},
+    {key:'afternoon',label:'PM',    color:'#639922'},
+    {key:'overnight',label:'Night', color:'#7f77dd'},
+    {key:'fsd',      label:'FSD',   color:'#888'},
   ],
   contacts:[
     {name:'Marco',phone:'347-318-7384'},{name:'Heming',phone:'646-287-3129'},
@@ -145,129 +125,83 @@ let state = {
   }
 };
 
-const COLOR_BG = {
-  'b-purple':'#7c3aed','b-blue':'#1d6fc4','b-rose':'#9f1239','b-pink':'#c4256e',
-  'b-orange':'#c2540a','b-green':'#16803c','b-cyan':'#0e7490','b-red':'#c42020',
-  'b-teal':'#0d6e5e','b-brown':'#7c3400','b-lime':'#4a7c10','b-indigo':'#3730a3',
-  'b-fsd':'#888'
-};
-
-let selectedDay = (new Date().getDay()+6)%7;
-let currentView = 'schedule';
-
 function colorFor(name){
+  // support both {color:'#hex'} and {color:'b-class'} formats
   const e=state.employees.find(e=>e.name.trim()===name.trim());
-  return e?e.color:'b-fsd';
-}
-function colorBg(key){ return COLOR_BG[key]||'#888'; }
-function avatarBg(name){
-  const e=state.employees.find(e=>e.name===name);
-  const bg=e?colorBg(e.color):'#888';
-  return `background:${bg}22;color:${bg}`;
-}
-function namesHtml(str){
-  if(!str||!str.trim()) return '';
-  return str.split(',').map(n=>n.trim()).filter(Boolean)
-    .map(n=>`<span class="badge ${colorFor(n)}">${n}</span>`).join('');
+  if(!e) return '#888';
+  // if color is a hex value use directly, else map class to hex
+  if(e.color.startsWith('#')) return e.color;
+  const map={'b-purple':'#7c3aed','b-blue':'#1d6fc4','b-rose':'#9f1239','b-pink':'#c4256e',
+    'b-orange':'#c2540a','b-green':'#16803c','b-cyan':'#0e7490','b-red':'#c42020',
+    'b-teal':'#0d6e5e','b-brown':'#7c3400','b-lime':'#4a7c10','b-indigo':'#3730a3','b-fsd':'#888'};
+  return map[e.color]||'#888';
 }
 
-// Header date
-function renderHeader(){
-  const now=new Date();
-  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  document.getElementById('dateLabel').textContent=
-    `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+function avatarColor(name){
+  return colorFor(name);
 }
 
-// Day pills
-function renderDayRow(){
+function renderAll(){
   const today=(new Date().getDay()+6)%7;
-  document.getElementById('dayRow').innerHTML=DAYS_SHORT.map((d,i)=>`
-    <div class="day-pill${i===selectedDay?' active':''}${i===today?' today-pill':''}"
-      onclick="selectDay(${i})">${d}${i===today?'<br><span style="font-size:9px;opacity:.7">Today</span>':''}</div>
-  `).join('');
-}
+  const now=new Date();
+  const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('dateLabel').textContent=`${mo[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
 
-function selectDay(i){
-  selectedDay=i;
-  renderDayRow();
-  renderView();
-  document.getElementById('scrollArea').scrollTop=0;
-}
-
-// Tab switch
-function switchView(v){
-  currentView=v;
-  document.querySelectorAll('.tab').forEach((t,i)=>{
-    t.classList.toggle('active',['schedule','contacts','breaks'][i]===v);
+  // Schedule grid
+  let html='';
+  html+=`<div class="grid-header">`;
+  html+=`<div></div>`;
+  DAYS.forEach((d,i)=>{
+    html+=`<div class="day-label${i===today?' today':''}">${d}</div>`;
   });
-  renderView();
-  document.getElementById('scrollArea').scrollTop=0;
-}
+  html+=`</div>`;
 
-function renderView(){
-  if(currentView==='schedule') renderSchedule();
-  else if(currentView==='contacts') renderContacts();
-  else renderBreaks();
-}
-
-function renderSchedule(){
-  const di=selectedDay;
-  document.getElementById('scrollArea').innerHTML=state.shifts.map(s=>{
-    const names=state.schedule[s.key]?.[di]||'';
-    return `<div class="shift-row">
-      <div class="shift-head">
-        <div class="shift-dot" style="background:${s.color}"></div>
-        <div class="shift-info">
-          <div class="shift-name">${s.label}</div>
-          <div class="shift-time">${s.time}</div>
-        </div>
-      </div>
-      ${names.trim()
-        ?`<div class="shift-body">${namesHtml(names)}</div>`
-        :`<div class="shift-empty">No one scheduled</div>`}
+  state.shifts.forEach(s=>{
+    html+=`<div class="shift-row">`;
+    html+=`<div class="shift-label">
+      <div class="shift-dot" style="background:${s.color}"></div>
+      <span class="shift-name">${s.label}</span>
     </div>`;
-  }).join('');
-}
+    for(let i=0;i<7;i++){
+      const names=(state.schedule[s.key]||[])[i]||'';
+      const list=names.trim()?names.split(',').map(n=>n.trim()).filter(Boolean):[];
+      html+=`<div class="shift-cell${i===today?' today':''}">`;
+      if(list.length){
+        list.forEach(n=>{
+          html+=`<div class="name-badge" style="background:${colorFor(n)}">${n}</div>`;
+        });
+      } else {
+        html+=`<span style="font-size:8px;color:#ddd">—</span>`;
+      }
+      html+=`</div>`;
+    }
+    html+=`</div>`;
+  });
+  document.getElementById('scheduleGrid').innerHTML=html;
 
-function renderContacts(){
-  const contactsHtml=state.contacts.map(c=>`
-    <div class="contact-row">
-      <div class="av" style="${avatarBg(c.name)}">${c.name.slice(0,2)}</div>
-      <span class="contact-name">${c.name}</span>
-      <a class="call-btn" href="tel:${c.phone.replace(/\D/g,'')}">📞 ${c.phone}</a>
-    </div>`).join('');
+  // Contacts
+  let cHtml='';
+  state.contacts.forEach(c=>{
+    const bg=avatarColor(c.name);
+    cHtml+=`<div class="contact-card">
+      <div class="av" style="background:${bg}22;color:${bg}">${c.name.slice(0,2)}</div>
+      <div style="min-width:0">
+        <div class="contact-name">${c.name}</div>
+        <a class="contact-phone" href="tel:${c.phone.replace(/\D/g,'')}">${c.phone}</a>
+      </div>
+    </div>`;
+  });
+  document.getElementById('contactsList').innerHTML=cHtml;
 
-  const supsHtml=state.supervisors.map(s=>`
-    <div class="sup-row">
+  // Supervisors
+  let sHtml='';
+  state.supervisors.forEach(s=>{
+    sHtml+=`<div class="sup-row">
       <span class="sup-name">${s.name}</span>
-      <a class="sup-call" href="tel:${s.phone.replace(/\D/g,'')}">📞 ${s.phone}</a>
-    </div>`).join('');
-
-  document.getElementById('scrollArea').innerHTML=`
-    <div class="section-label">Staff</div>
-    ${contactsHtml}
-    <div class="section-label">Supervisors</div>
-    ${supsHtml}`;
-}
-
-function renderBreaks(){
-  const breaks=[
-    {name:'Morning shift', time:'11:30 PM – 12:00 PM'},
-    {name:'Morning shift', time:'12:15 PM – 12:45 PM'},
-    {name:'Afternoon shift',time:'2:00 PM – 2:30 PM'},
-    {name:'Evening shift',  time:'5:00 PM – 5:30 PM'},
-    {name:'Evening shift',  time:'5:45 PM – 6:15 PM'},
-    {name:'Overnight shift',time:'2:00 AM – 2:30 AM'},
-    {name:'Overnight shift',time:'3:15 AM – 3:45 AM'},
-  ];
-  document.getElementById('scrollArea').innerHTML=`
-    ${breaks.map(b=>`
-      <div class="break-row">
-        <span class="break-name">${b.name}</span>
-        <span class="break-time">${b.time}</span>
-      </div>`).join('')}
-    <div class="break-note">30 min mandatory lunch break per shift</div>`;
+      <a class="sup-phone" href="tel:${s.phone.replace(/\D/g,'')}">📞 ${s.phone}</a>
+    </div>`;
+  });
+  document.getElementById('supsList').innerHTML=sHtml;
 }
 
 async function loadFromCloud(){
@@ -277,17 +211,10 @@ async function loadFromCloud(){
     const data=await res.json();
     if(data&&data.record&&data.record.schedule) state=data.record;
   }catch(e){ console.log('Using default data'); }
-  renderHeader();
-  renderDayRow();
-  renderView();
+  renderAll();
 }
 
 loadFromCloud();
-
-// Redirect desktop users to full version
-if(!/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-  window.location.replace('index.html');
-}
 </script>
 </body>
 </html>
