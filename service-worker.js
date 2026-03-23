@@ -1,9 +1,9 @@
-const CACHE_NAME = 'security-schedule-v1';
+const CACHE_NAME = 'security-schedule-v2';
 const ASSETS = [
-  '/mobile.html',
-  '/mobile1.html',
-  '/index.html',
-  '/manifest.json',
+  '/nwm-schedule2026/mobile.html',
+  '/nwm-schedule2026/mobile1.html',
+  '/nwm-schedule2026/index.html',
+  '/nwm-schedule2026/manifest.json',
   'https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap'
 ];
 
