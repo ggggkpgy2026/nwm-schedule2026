@@ -4,10 +4,9 @@
   "description": "Security Guards Schedule",
   "start_url": "/nwm-schedule2026/mobile.html",
   "scope": "/nwm-schedule2026/",
-  "display": "minimal-ui",
+  "display": "standalone",
   "background_color": "#f2f1ec",
   "theme_color": "#18180f",
-  "orientation": "portrait",
   "icons": [
     {
       "src": "icon-192.png",
