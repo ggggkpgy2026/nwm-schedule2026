@@ -82,11 +82,13 @@
     thead th{padding:15px 8px;font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-align:center;letter-spacing:.4px}
     thead th:first-child{text-align:left;padding-left:20px;width:200px}
     thead th.day-th{font-size:14px;font-weight:700;color:#fff;letter-spacing:0}
+    thead th.today-th{background:#1d6fc4;color:#fff}
     tbody tr{border-bottom:.5px solid var(--border);transition:background .1s}
     tbody tr:last-child{border-bottom:none}
     tbody tr:hover{background:#fafaf7}
     td{padding:12px 6px;text-align:center;vertical-align:middle}
     td:first-child{text-align:left;padding-left:20px}
+
     .shift-time{font-size:12px;font-weight:700;color:var(--text);font-family:var(--mono);white-space:nowrap}
     .cell{display:flex;flex-direction:column;align-items:center;gap:4px}
     .fsd-badge{background:var(--surface2);color:var(--text2);font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;font-family:var(--mono)}
@@ -299,9 +301,6 @@
 <div class="save-toast" id="toast"></div>
 
 <script>
-  if(/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-  window.location.replace('mobile.html');
-}
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const DAYS_SHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 
@@ -457,14 +456,15 @@ function renderMobile(){
 }
 
 function renderDesktop(){
+  const today=(new Date().getDay()+6)%7;
   document.getElementById('desktopTable').innerHTML = `<table>
     <thead><tr>
-      <th>Shift</th>${DAYS.map(d=>`<th class="day-th">${d}</th>`).join('')}
+      <th>Shift</th>${DAYS.map((d,i)=>`<th class="day-th${i===today?' today-th':''}">${d}</th>`).join('')}
     </tr></thead>
     <tbody>
       ${state.shifts.map(s=>`<tr>
         <td><div class="shift-time">${s.time}</div></td>
-        ${(state.schedule[s.key]||Array(7).fill('')).map(cell=>
+        ${(state.schedule[s.key]||Array(7).fill('')).map((cell,i)=>
           `<td>${cell.trim()?`<div class="cell">${namesHtml(cell)}</div>`:`<span class="dash">—</span>`}</td>`
         ).join('')}
       </tr>`).join('')}
@@ -686,6 +686,11 @@ function saveAll(){
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────
+// Auto redirect mobile users
+if(/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+  window.location.replace('mobile.html');
+}
+
 const now=new Date();
 const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 document.getElementById('currentDate').textContent=
