@@ -4,12 +4,6 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Security Guards Schedule</title>
-  <link rel="manifest" href="manifest.json"/>
-  <meta name="mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-title" content="Security Schedule"/>
-  <link rel="apple-touch-icon" href="icon-192.png"/>
-  <meta name="theme-color" content="#18180f"/>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -88,6 +82,7 @@
     thead th{padding:15px 8px;font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-align:center;letter-spacing:.4px}
     thead th:first-child{text-align:left;padding-left:20px;width:200px}
     thead th.day-th{font-size:14px;font-weight:700;color:#fff;letter-spacing:0}
+    thead th.day-th.today{background:#1d6fc4;color:#fff}
     tbody tr{border-bottom:.5px solid var(--border);transition:background .1s}
     tbody tr:last-child{border-bottom:none}
     tbody tr:hover{background:#fafaf7}
@@ -460,14 +455,15 @@ function renderMobile(){
 }
 
 function renderDesktop(){
+  const today=(new Date().getDay()+6)%7;
   document.getElementById('desktopTable').innerHTML = `<table>
     <thead><tr>
-      <th>Shift</th>${DAYS.map(d=>`<th class="day-th">${d}</th>`).join('')}
+      <th>Shift</th>${DAYS.map((d,i)=>`<th class="day-th${i===today?' today':''}">${d}</th>`).join('')}
     </tr></thead>
     <tbody>
       ${state.shifts.map(s=>`<tr>
         <td><div class="shift-time">${s.time}</div></td>
-        ${(state.schedule[s.key]||Array(7).fill('')).map(cell=>
+        ${(state.schedule[s.key]||Array(7).fill('')).map((cell,i)=>
           `<td>${cell.trim()?`<div class="cell">${namesHtml(cell)}</div>`:`<span class="dash">—</span>`}</td>`
         ).join('')}
       </tr>`).join('')}
@@ -700,12 +696,6 @@ document.getElementById('currentDate').textContent=
   `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
 
 loadFromCloud();
-</script>
-
-<script>
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('service-worker.js');
-}
 </script>
 </body>
 </html>
