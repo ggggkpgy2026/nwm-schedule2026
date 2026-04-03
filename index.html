@@ -380,16 +380,17 @@ const MASTER_KEY = '$2a$10$yL7ht7nVnUIXe4e/qGTpg.kXULfxRdguRyfVofbdsJ.iR5552oiwO
 const BIN_ID = '69befca1b7ec241ddc8d494c';
 
 async function loadFromCloud(){
+  renderAll(); // 先用默认数据立即渲染
   try {
     const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`,{headers:{'X-Master-Key':MASTER_KEY}});
     if(!res.ok) throw new Error('HTTP '+res.status);
     const data = await res.json();
     if(data && data.record && data.record.schedule){
       state = data.record;
+      renderAll(); // 云端数据回来后刷新
       console.log('Cloud loaded OK');
     }
-  } catch(e){ console.log('Load failed:', e.message); }
-  renderAll();
+  } catch(e){ console.log('Load failed, using default data'); }
 }
 
 async function saveToCloud(){
@@ -412,7 +413,10 @@ function colorFor(name){
 function namesHtml(str){
   if(!str || !str.trim()) return '';
   return str.split(',').map(n=>n.trim()).filter(Boolean)
-    .map(n=>`<span class="badge ${colorFor(n)}">${n}</span>`).join('');
+    .map(n=>{
+      const bg = colorBg(colorFor(n));
+      return `<span class="badge" style="background:${bg};color:#fff">${n}</span>`;
+    }).join('');
 }
 
 function avatarStyle(name){

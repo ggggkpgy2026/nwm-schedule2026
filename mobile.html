@@ -2,15 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <title>Schedule</title>
-  <link rel="manifest" href="manifest.json"/>
-  <meta name="mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="Schedule"/>
-  <link rel="apple-touch-icon" href="icon-192.png"/>
-  <meta name="theme-color" content="#18180f"/>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -212,22 +205,19 @@ function renderAll(){
 }
 
 async function loadFromCloud(){
+  renderAll(); // 先用默认数据立即渲染
   try{
     const res=await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`,{headers:{'X-Master-Key':MASTER_KEY}});
     if(!res.ok) throw new Error();
     const data=await res.json();
-    if(data&&data.record&&data.record.schedule) state=data.record;
+    if(data&&data.record&&data.record.schedule){
+      state=data.record;
+      renderAll(); // 云端数据回来后刷新
+    }
   }catch(e){ console.log('Using default data'); }
-  renderAll();
 }
 
 loadFromCloud();
-</script>
-
-<script>
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('service-worker.js');
-}
 </script>
 </body>
 </html>
