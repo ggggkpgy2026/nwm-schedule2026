@@ -82,7 +82,6 @@
     thead th{padding:15px 8px;font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-align:center;letter-spacing:.4px}
     thead th:first-child{text-align:left;padding-left:20px;width:200px}
     thead th.day-th{font-size:14px;font-weight:700;color:#fff;letter-spacing:0}
-    thead th.day-th.today{background:#1d6fc4;color:#fff}
     tbody tr{border-bottom:.5px solid var(--border);transition:background .1s}
     tbody tr:last-child{border-bottom:none}
     tbody tr:hover{background:#fafaf7}
@@ -317,7 +316,11 @@ const COLOR_OPTIONS = [
   {key:'b-lime',  label:'Lime',  bg:'#4a7c10'},
   {key:'b-indigo',label:'Indigo',bg:'#3730a3'},
 ];
-function colorBg(key){ return (COLOR_OPTIONS.find(c=>c.key===key)||{bg:'#888'}).bg; }
+function colorBg(key){ 
+  if(!key) return '#888';
+  if(key.startsWith('#')) return key;
+  return (COLOR_OPTIONS.find(c=>c.key===key)||{bg:'#888'}).bg; 
+}
 
 // ── App State ──────────────────────────────────────────────────────────────
 let state = {
@@ -455,15 +458,14 @@ function renderMobile(){
 }
 
 function renderDesktop(){
-  const today=(new Date().getDay()+6)%7;
   document.getElementById('desktopTable').innerHTML = `<table>
     <thead><tr>
-      <th>Shift</th>${DAYS.map((d,i)=>`<th class="day-th${i===today?' today':''}">${d}</th>`).join('')}
+      <th>Shift</th>${DAYS.map(d=>`<th class="day-th">${d}</th>`).join('')}
     </tr></thead>
     <tbody>
       ${state.shifts.map(s=>`<tr>
         <td><div class="shift-time">${s.time}</div></td>
-        ${(state.schedule[s.key]||Array(7).fill('')).map((cell,i)=>
+        ${(state.schedule[s.key]||Array(7).fill('')).map(cell=>
           `<td>${cell.trim()?`<div class="cell">${namesHtml(cell)}</div>`:`<span class="dash">—</span>`}</td>`
         ).join('')}
       </tr>`).join('')}
@@ -561,28 +563,25 @@ function buildScheduleEditor(){
 }
 
 // Employee editor
+function empColorToHex(color){
+  if(!color) return '#888888';
+  if(color.startsWith('#')) return color;
+  return colorBg(color)||'#888888';
+}
 function buildEmployeeEditor(){
-  document.getElementById('employeeEditor').innerHTML = state.employees.map((emp,i)=>`
-    <div class="form-row" data-emp="${i}">
-      <div class="color-dot" style="background:${colorBg(emp.color)};width:14px;height:14px;border-radius:50%;flex-shrink:0"></div>
+  document.getElementById('employeeEditor').innerHTML = state.employees.map((emp,i)=>{
+    const hex = empColorToHex(emp.color);
+    return `<div class="form-row" data-emp="${i}">
+      <input type="color" class="emp-color-picker" data-i="${i}" value="${hex}"
+        style="width:30px;height:30px;border-radius:50%;border:2px solid var(--border2);padding:2px;cursor:pointer;flex-shrink:0;background:none"/>
       <input class="form-input med emp-name" data-i="${i}" value="${emp.name}" placeholder="Name"/>
-      <select class="color-select emp-color" data-i="${i}">
-        ${COLOR_OPTIONS.map(c=>`<option value="${c.key}" ${c.key===emp.color?'selected':''}>${c.label}</option>`).join('')}
-        ${emp.color==='b-fsd'?'<option value="b-fsd" selected>Gray (FSD)</option>':''}
-      </select>
       <button class="btn-danger" onclick="removeEmployee(${i})">Remove</button>
-    </div>`).join('');
-
-  document.querySelectorAll('.emp-color').forEach(sel=>{
-    sel.onchange=()=>{
-      const dot=sel.closest('.form-row').querySelector('.color-dot');
-      dot.style.background=colorBg(sel.value);
-    };
-  });
+    </div>`;
+  }).join('');
 }
 
 function addEmployee(){
-  state.employees.push({name:'New Employee', color:'b-blue'});
+  state.employees.push({name:'New Employee', color:'#1d6fc4'});
   buildEmployeeEditor();
 }
 function removeEmployee(i){
@@ -603,11 +602,18 @@ function buildShiftEditor(){
 
 // Contacts editor
 function buildContactsEditor(){
-  document.getElementById('contactsEditor').innerHTML = state.contacts.map((c,i)=>`
-    <div class="form-row">
-      <span class="form-label">${c.name}</span>
-      <input class="form-input wide contact-phone" data-i="${i}" value="${c.phone}" placeholder="Phone"/>
-    </div>`).join('');
+  // 基于员工列表生成联系人行（排除 RAM），自动匹配已有电话
+  const staffEmps = state.employees.filter(e=>e.name!=='RAM');
+  document.getElementById('contactsEditor').innerHTML = staffEmps.map((emp,i)=>{
+    const existing = state.contacts.find(c=>c.name===emp.name);
+    const phone = existing ? existing.phone : '';
+    const bg = colorBg(emp.color);
+    return `<div class="form-row">
+      <div class="av" style="background:${bg}22;color:${bg};width:28px;height:28px;font-size:10px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">${emp.name.slice(0,2)}</div>
+      <span class="form-label">${emp.name}</span>
+      <input class="form-input wide contact-phone" data-name="${emp.name}" value="${phone}" placeholder="Phone"/>
+    </div>`;
+  }).join('');
 
   document.getElementById('supervisorsEditor').innerHTML = state.supervisors.map((s,i)=>`
     <div class="form-row">
@@ -635,10 +641,10 @@ function saveAll(){
   // employees
   document.querySelectorAll('#employeeEditor .form-row').forEach((row,i)=>{
     const nameInp=row.querySelector('.emp-name');
-    const colorSel=row.querySelector('.emp-color');
+    const colorPicker=row.querySelector('.emp-color-picker');
     if(nameInp && i<state.employees.length){
       state.employees[i].name=nameInp.value;
-      state.employees[i].color=colorSel.value;
+      state.employees[i].color=colorPicker ? colorPicker.value : state.employees[i].color;
     }
   });
   // shifts
@@ -648,9 +654,12 @@ function saveAll(){
   document.querySelectorAll('#shiftEditor .shift-time').forEach(inp=>{
     state.shifts[inp.dataset.i].time=inp.value;
   });
-  // contacts
+  // contacts：重建数组，保留有电话号码的员工
+  state.contacts = [];
   document.querySelectorAll('.contact-phone').forEach(inp=>{
-    state.contacts[inp.dataset.i].phone=inp.value;
+    const phone = inp.value.trim();
+    const name = inp.dataset.name;
+    if(name) state.contacts.push({name, phone});
   });
   // supervisors
   document.querySelectorAll('.sup-name-input').forEach(inp=>{
