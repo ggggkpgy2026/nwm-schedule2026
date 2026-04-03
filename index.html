@@ -299,6 +299,9 @@
 <div class="save-toast" id="toast"></div>
 
 <script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const DAYS_SHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 
@@ -376,9 +379,6 @@ let state = {
 };
 
 // ── Firebase ──────────────────────────────────────────────────────────────
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-
 const firebaseConfig = {
   apiKey: "AIzaSyBwz1yzJYwP28BDZvdU-RliqmsptiZdcwk",
   authDomain: "nwm-schedule.firebaseapp.com",
@@ -702,6 +702,18 @@ function saveAll(){
     setTimeout(()=>toast.classList.remove('show'),3000);
   });
 }
+
+// ── Expose globals (needed for onclick handlers) ──────────────────────────
+window.openPasswordModal = openPasswordModal;
+window.closePwModal = closePwModal;
+window.checkPassword = checkPassword;
+window.closeAdmin = closeAdmin;
+window.switchTab = switchTab;
+window.addEmployee = addEmployee;
+window.removeEmployee = removeEmployee;
+window.addSupervisor = addSupervisor;
+window.removeSupervisor = removeSupervisor;
+window.saveAll = saveAll;
 
 // ── Init ───────────────────────────────────────────────────────────────────
 // Auto redirect mobile users
