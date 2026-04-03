@@ -298,7 +298,7 @@
 
 <div class="save-toast" id="toast"></div>
 
-<script>
+<script type="module">
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const DAYS_SHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 
@@ -375,33 +375,39 @@ let state = {
   }
 };
 
-// ── Cloud ──────────────────────────────────────────────────────────────────
-const MASTER_KEY = '$2a$10$yL7ht7nVnUIXe4e/qGTpg.kXULfxRdguRyfVofbdsJ.iR5552oiwO';
-const BIN_ID = '69befca1b7ec241ddc8d494c';
+// ── Firebase ──────────────────────────────────────────────────────────────
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBwz1yzJYwP28BDZvdU-RliqmsptiZdcwk",
+  authDomain: "nwm-schedule.firebaseapp.com",
+  projectId: "nwm-schedule",
+  storageBucket: "nwm-schedule.firebasestorage.app",
+  messagingSenderId: "947372495616",
+  appId: "1:947372495616:web:2da5100d29c6447f2959e5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 async function loadFromCloud(){
   renderAll(); // 先用默认数据立即渲染
   try {
-    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`,{headers:{'X-Master-Key':MASTER_KEY}});
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const data = await res.json();
-    if(data && data.record && data.record.schedule){
-      state = data.record;
+    const snap = await getDoc(doc(db, 'schedule', 'data'));
+    if(snap.exists() && snap.data().schedule){
+      state = snap.data();
       renderAll(); // 云端数据回来后刷新
-      console.log('Cloud loaded OK');
+      console.log('Firebase loaded OK');
     }
-  } catch(e){ console.log('Load failed, using default data'); }
+  } catch(e){ console.log('Load failed, using default data', e); }
 }
 
 async function saveToCloud(){
   try {
-    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`,{
-      method:'PUT',
-      headers:{'Content-Type':'application/json','X-Master-Key':MASTER_KEY},
-      body: JSON.stringify(state)
-    });
+    await setDoc(doc(db, 'schedule', 'data'), state);
     return true;
-  } catch(e){ return false; }
+  } catch(e){ console.log('Save failed', e); return false; }
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────
