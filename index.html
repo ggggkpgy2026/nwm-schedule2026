@@ -82,6 +82,7 @@
     thead th{padding:15px 8px;font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-align:center;letter-spacing:.4px}
     thead th:first-child{text-align:left;padding-left:20px;width:200px}
     thead th.day-th{font-size:14px;font-weight:700;color:#fff;letter-spacing:0}
+    thead th.today-th{background:#378add;color:#fff;border-radius:8px}
     tbody tr{border-bottom:.5px solid var(--border);transition:background .1s}
     tbody tr:last-child{border-bottom:none}
     tbody tr:hover{background:#fafaf7}
@@ -468,9 +469,10 @@ function renderMobile(){
 }
 
 function renderDesktop(){
+  const todayIdx=(new Date().getDay()+6)%7;
   document.getElementById('desktopTable').innerHTML = `<table>
     <thead><tr>
-      <th>Shift</th>${DAYS.map(d=>`<th class="day-th">${d}</th>`).join('')}
+      <th>Shift</th>${DAYS.map((d,i)=>`<th class="day-th${i===todayIdx?' today-th':''}">${d}</th>`).join('')}
     </tr></thead>
     <tbody>
       ${state.shifts.map(s=>`<tr>
